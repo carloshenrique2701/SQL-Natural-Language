@@ -13,11 +13,11 @@ public class GenAiService {
 	private Client client;
 	
 	public String apiReq(String userReq) {
-		
+		/*
 		StringBuilder prompt = new StringBuilder();
 		
 		prompt.append("Torne essa pergunta em uma consulta SQL");
-		
+		*/
 		GenerateContentResponse res = 
 				client.models.generateContent(
 						"gemini-3-flash-preview", 

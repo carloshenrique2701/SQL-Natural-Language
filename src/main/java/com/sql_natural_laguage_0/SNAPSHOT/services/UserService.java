@@ -35,13 +35,21 @@ public class UserService {
 	public User update(Long id, User obj) {
 		User entity = findById(id);
 		insertUpdatedValues(entity, obj);
-		return entity;
+		return repository.save(entity);
 	}
 
 	private void insertUpdatedValues(User entity, User obj) {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
 		entity.setPassword(obj.getPassword());
+	}
+	
+	public boolean login(String email, String password) {
+		Optional<User> user = repository.findByEmail(email);
+		if (user.isPresent()) {
+			return user.get().getPassword().equals(password);
+		}
+		return false;
 	}
 	
 }
