@@ -12,18 +12,14 @@ public class GenAiService {
 	@Autowired
 	private Client client;
 	
-	public String apiReq(String userReq) {
-		/*
-		StringBuilder prompt = new StringBuilder();
-		
-		prompt.append("Torne essa pergunta em uma consulta SQL");
-		*/
+	public String apiReq(String prompt) {
+		System.out.println("\n\n\nPrompt recebido: " + prompt);
 		GenerateContentResponse res = 
 				client.models.generateContent(
 						"gemini-3-flash-preview", 
-						userReq, 
+						prompt, 
 						null);
-		
+		System.out.println("\n\n\n\nResposta da API: " + res.text());
 		return res.text();
 	}
 
