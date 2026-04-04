@@ -16,7 +16,7 @@ public class GenAiService {
 		System.out.println("\n\n\nPrompt recebido: " + prompt);
 		GenerateContentResponse res = 
 				client.models.generateContent(
-						"gemini-3-flash-preview", 
+						"gemini-2.5-flash", 
 						prompt, 
 						null);
 		System.out.println("\n\n\n\nResposta da API: " + res.text());

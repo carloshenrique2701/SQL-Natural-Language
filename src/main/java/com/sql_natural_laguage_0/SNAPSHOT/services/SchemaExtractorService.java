@@ -20,12 +20,15 @@ public class SchemaExtractorService {
 		try (Connection conn = DriverManager.getConnection(creds.url(), creds.username(), creds.password())){
 			
 			String catalog = conn.getCatalog();
+			
 			DatabaseMetaData metaData = conn.getMetaData();
+			
 			// Obtém as tabelas do banco de dados (% é um caractere generic. ex: "busque tables com qualquer nome")
 			try (ResultSet tables = metaData.getTables(catalog, null, "%", new String[] {"TABLE"})) {
 				
 				while(tables.next()) {
 					String tableName = tables.getString("TABLE_NAME");
+					
 					schemaInfo.append("Table: ").append(tableName).append("\nColumns: ");
 					
 					// Obtém as colunas de cada tabela

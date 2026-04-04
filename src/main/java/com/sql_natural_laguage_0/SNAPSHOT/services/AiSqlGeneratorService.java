@@ -20,11 +20,15 @@ public class AiSqlGeneratorService {
 				Você é um especialista em SQL.
 				Banco de dados: %s
 				Data atual: %s
+				
 				Schema do banco:
 				%s
 				
 				Instrução: converta a pergunta do usuário em um SQL SELECT que possa responder-la.
 				ex: 'Quantos funcionários eu tenho no total?' retorno: 'SELECT count(id) FROM tb_sellers;'
+				
+				Se a pergunta for muito genérica, como 'Me mostre os funcionários', retorne um SQL que limite o número de resultados, 
+				como 'SELECT * FROM tb_sellers LIMIT 10;'
 				
 				Seu retorno deve conter somente a query conforme o exemplo, sem explicações ou markdown.
 
@@ -52,6 +56,7 @@ public class AiSqlGeneratorService {
 				Retorne somente o HTML, sem explicações ou markdown.
 				
 				Pergunta: %s
+				resposta: %s
 				
 				""".formatted(LocalDate.now(), userQuery, result);
 		
