@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.entities.dto;
+package com.sql_engine.v_1_0.entities.dto;
 
 public record DatabaseCredentials (
 	String url,

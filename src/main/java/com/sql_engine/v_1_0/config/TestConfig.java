@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.config;
+package com.sql_engine.v_1_0.config;
 
 import java.util.Arrays;
 
@@ -7,8 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.sql_natural_laguage_0.SNAPSHOT.entities.User;
-import com.sql_natural_laguage_0.SNAPSHOT.repositories.UserRepository;
+import com.sql_engine.v_1_0.entities.User;
+import com.sql_engine.v_1_0.repositories.UserRepository;
 
 @Configuration
 @Profile("test")

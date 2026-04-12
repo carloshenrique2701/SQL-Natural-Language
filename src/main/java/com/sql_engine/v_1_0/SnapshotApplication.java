@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT;
+package com.sql_engine.v_1_0;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

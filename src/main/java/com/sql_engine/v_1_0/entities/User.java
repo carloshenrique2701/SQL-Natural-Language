@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.entities;
+package com.sql_engine.v_1_0.entities;
 
 import java.io.Serializable;
 import java.util.Objects;

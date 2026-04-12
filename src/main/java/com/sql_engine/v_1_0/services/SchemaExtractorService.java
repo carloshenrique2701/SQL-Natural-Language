@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.services;
+package com.sql_engine.v_1_0.services;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -8,7 +8,8 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Service;
 
-import com.sql_natural_laguage_0.SNAPSHOT.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
 
 @Service
 public class SchemaExtractorService {
@@ -51,7 +52,7 @@ public class SchemaExtractorService {
 			}
 			
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao extrair o esquema do banco de dados.");
+			throw new DatabaseException("Error extracting schema. " + e.getMessage());
 		}
 
 		return schemaInfo.toString();

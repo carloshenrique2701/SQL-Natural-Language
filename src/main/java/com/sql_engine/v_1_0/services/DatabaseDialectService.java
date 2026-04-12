@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.services;
+package com.sql_engine.v_1_0.services;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -7,7 +7,8 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Service;
 
-import com.sql_natural_laguage_0.SNAPSHOT.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
 
 @Service
 public class DatabaseDialectService {
@@ -22,7 +23,7 @@ public class DatabaseDialectService {
 			return dialect;
 
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao conectar ou consultar o banco de dados: ");
+			throw new DatabaseException("Failed to connect to the database to detect its dialect.");
 		}
 
 	}

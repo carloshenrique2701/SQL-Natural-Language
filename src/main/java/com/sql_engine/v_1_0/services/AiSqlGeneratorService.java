@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.services;
+package com.sql_engine.v_1_0.services;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +13,7 @@ public class AiSqlGeneratorService {
 	@Autowired
 	private GenAiService genAiService;
 
-	public String generateSql(String userQuery, String schema, String dialect) {
+	public String generateSql(String userQuery, String schema, String dialect, String model) {
 		
 		String prompt = """
 				
@@ -36,11 +36,11 @@ public class AiSqlGeneratorService {
 										
 				""".formatted(dialect, LocalDate.now(), schema, userQuery);
 		
-		return genAiService.apiReq(prompt);
+		return genAiService.apiReq(prompt, model);
 		
 	}
 	
-	public String generateHtml(List<Map<String, Object>> result, String userQuery) {
+	public String generateHtml(List<Map<String, Object>> result, String userQuery, String model) {
 		
 		String prompt = """
 				
@@ -60,7 +60,7 @@ public class AiSqlGeneratorService {
 				
 				""".formatted(LocalDate.now(), userQuery, result);
 		
-		return genAiService.apiReq(prompt);
+		return genAiService.apiReq(prompt, model);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.sql_natural_laguage_0.SNAPSHOT.services;
+package com.sql_engine.v_1_0.services;
 
 
 import java.sql.Connection;
@@ -14,7 +14,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.sql_natural_laguage_0.SNAPSHOT.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
+import com.sql_engine.v_1_0.services.exceptions.ai.DatabaseSecurityException;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -31,11 +33,11 @@ public class QueryExecutorService {
 		try {
 			st = CCJSqlParserUtil.parse(sql);			
 		} catch (JSQLParserException e) {
-			throw new SecurityException("A query fornecida é inválida ou potencialmente perigosa.");
+			throw new DatabaseSecurityException("Waning operation detected. It's not allowed to execute operations that can alter our database.");
 		} 
 		
 		if (!(st instanceof Select)) {
-			throw new SecurityException("Não estou autorizado a realizar operações que alterem nossa base de dados.");
+			throw new DatabaseSecurityException("I'm sorry, but I can only execute consults that retrieve data. Operations that can alter the database are not allowed for security reasons.");
 		}
 		
 		List<Map<String,Object>> rows = new ArrayList<>();
@@ -60,10 +62,11 @@ public class QueryExecutorService {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Erro ao executar a query.");
-		}
-		System.out.println("\n\n\nResultados da query:\n" + rows.toString());
+			throw new DatabaseException("Error executing a connection to the database.");
+		} catch (NoClassDefFoundError e) {
+			throw new DatabaseException("We don't have the necessary driver to connect to this database. I'm sorry for the inconvenience.");
+		} 
+		
 		return rows;
 		
 	}
