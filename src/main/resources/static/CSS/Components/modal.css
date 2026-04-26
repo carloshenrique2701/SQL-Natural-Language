@@ -1,0 +1,138 @@
+.modal {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: var(--bg-dark);
+    max-width: 50%;
+    border-radius: 10px;
+    padding: 30px;
+    top: 50%;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    position: relative;
+    animation: fade-in 0.5s ease-in-out;
+}
+
+.modal-content .close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 30px;
+    color: #666;
+    cursor: pointer;
+}
+
+.modal-content .close-modal:hover {
+    color: var(--secondary-green);
+    scale: 1.07;
+}
+.modal-content h1 {
+    margin-bottom: 20px;
+}
+
+.input-check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: sans-serif;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 20px;
+}
+
+/* Esconde o checkbox original mas mantém acessível */
+.input-check input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Estiliza o label para parecer a caixa customizada antes do texto */
+.input-check label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px; /* Espaço para a nova caixa */
+}
+
+/* Cria a "caixa" do checkbox usando o ::before do label */
+.input-check label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #2f352f;
+    border: 2px solid var(--primary-green);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+/* Estiliza o ícone de check (o "V") usando o ::after */
+.input-check label::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg) scale(0); /* Começa invisível e pequeno */
+    transition: transform 0.2s ease;
+}
+
+/* Quando o input estiver marcado (:checked) */
+.input-check input:checked + label::before {
+    background-color: var(--secondary-green); /* Cor de destaque */
+    border-color: var(--secondary-green);
+}
+
+/* Mostra o ícone de check quando marcado */
+.input-check input:checked + label::after {
+    transform: rotate(45deg) scale(1);
+}
+
+/* Feedback visual ao passar o mouse */
+.input-check:hover label::before {
+    border-color: var(--secondary-green);
+}
+
+.modal .modal-content button {
+    background-color: var(--primary-green);
+    padding: 8px 12px;
+    border: none;
+    border-radius: 7px;
+    color: #000;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.modal .modal-content button:hover {
+    background-color: var(--secondary-green);
+}
+
+@keyframes fade-in {
+    
+    0% {
+        transform: translateY(calc(-50% + 100px));
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-50%);
+        opacity: 1;
+    }
+
+}

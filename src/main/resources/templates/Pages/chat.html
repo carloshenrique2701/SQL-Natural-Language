@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AIQuery | Terminal de Consulta</title>
+        <link rel="stylesheet" href="../../static/CSS/global-styles.css">
+        <link rel="stylesheet" href="../../static/CSS/pages/chat.css">
+        <link rel="stylesheet" href="../../static/CSS/Components/modal.css">
+        <link rel="stylesheet" href="../../static/CSS/Components/settings-modal.css">
+        <link rel="stylesheet" href="../../static/CSS/Components/input-group.css">
+    </head>
+    <body>
+        <div class="app-container">
+
+            <!-- Main Chat Area -->
+            <main class="chat-area">
+
+                <!--Header Area-->
+                <header class="chat-header">
+                    
+                    <div class="logo">⚡ AI<span>Query</span></div>
+
+                    <div class="status-db">
+                        <div class="db-info"><span class="dot"></span> Banco Selecionado: <strong id="db-name">Test Clothing Store</strong></div>
+                        <button class="db-settings" id="db-settings">DB Configuration</button>
+                    </div>
+                    
+                    <div class="user-profile" id="user-profile">
+                        <div class="avatar"><img src="../../static/imgs/avatar.png" alt=""></div>
+                        <span id="user-name">João Silva</span>
+                    </div>
+
+                </header>
+
+                <!--Messages Area-->
+                <div class="messages" id="chat-messages">
+                    <!-- Mensagem IA -->
+                    <div class="message ai">
+                        <div class="msg-content">
+                            Olá! Sou seu assistente de dados. Qual query ou análise você deseja realizar hoje?
+                        </div>
+                    </div>
+
+                    <!-- Mensagem Usuário -->
+                    <div class="message user">
+                        <div class="msg-content">
+                            Selecione os 5 produtos mais vendidos no último mês que estão com estoque baixo.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <input type="text" id="user-request" placeholder="">
+                        <label for="user-request">Consulte no banco de dados aqui...</label>
+                        <button class="send-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+        <div class="modal" id="modal-db-settings">
+            <div class="modal-content">
+
+                <h1>DB Settings</h1>
+
+                <span id="close-modal" class="close-modal">&times;</span>
+
+                <form id="formDbSettings">
+
+                    <div class="input-check">
+                        <input type="checkbox" name="standard-bank" id="standard-bank">
+                        <label for="standard-bank">Utilizar banco de dados de teste</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" name="db-url" id="db-url" placeholder="">
+                        <label for="db-url">URL</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" name="db-user" id="db-user" placeholder="">
+                        <label for="db-user">User</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" name="db-password" id="db-password" placeholder="">
+                        <label for="db-password">Password</label>
+                    </div>
+
+                    <button type="submit">Salvar</button>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="settings-modal" id="settings-modal">
+            <ul class="settings-list">
+                <li onclick="window.location.href='settings.html'">⛭ Settings</li>
+                <li id="logOut">➜] Log out</li>
+            </ul>
+        </div>
+
+        <script src="../../static/JS/Pages/chat.js"></script>
+        <script type="module"  src="../../static/JS/Components/modal-dbConfiguration.js"></script>
+        <script type="module"  src="../../static/JS/Components/modal-chat-settings.js"></script>
+
+    </body>
+</html>

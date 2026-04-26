@@ -1,0 +1,52 @@
+*{
+
+    transition: all 0.4s ease-in-out;
+
+}
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: var(--text-dim);
+    position: absolute;
+    top: 14px;
+    left: 5%;
+    color: #424242;
+}
+
+.input-group input {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    color: white;
+    transition: 0.3s;
+}
+
+.input-group input:disabled {
+    background-color: #333; /* Cor mais escura */
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    transform: translateY(-125%);
+    color: var(--primary-green);
+    background-color: #0d1117;
+    text-shadow: 1px 1px 1px var(--primary-green);
+}

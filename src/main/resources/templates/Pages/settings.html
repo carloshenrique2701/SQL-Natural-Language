@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AIQuery | Terminal de Consulta</title>
+        <link rel="stylesheet" href="../../static/CSS/global-styles.css">
+        <link rel="stylesheet" href="../../static/CSS/pages/settings.css">
+        <link rel="stylesheet" href="../../static/CSS/Components/modal.css">
+        <link rel="stylesheet" href="../../static/CSS/Components/input-group.css">
+        <script src="../../static/JS/Components/modals-settings.js" type="module"></script>
+
+    </head>
+    <body>
+        <div class="app-container">
+
+            <!-- Main Settings Area -->
+            <main class="settings-area">
+
+                <!--Header Area-->
+                <header class="settings-header">
+                    
+                    <div class="logo">⚡ AI<span>Query</span></div>
+
+                    <button onclick="window.location.href='chat.html'">Voltar</button>
+
+                </header>
+
+                <!--Content Area-->
+                <div class="container">
+
+                    <h1 id="userName">Name</h1>
+                    <h2 id="userEmail">Email</h2>
+
+                    <div class="options">
+
+                        <div class="option" onclick="openModal('modal-new-name')">
+
+                            <h3>Alterar Nome</h3>
+                            <p>Mude seu nome a qualquer momento.</p>
+
+                        </div>
+
+                        <div class="option" onclick="openModal('modal-new-email')">
+
+                            <h3>Alterar Email</h3>
+                            <p>Mude seu Email a qualquer momento.</p>
+
+                        </div>
+
+                        <div class="option" onclick="openModal('modal-confirm-password')">
+
+                            <h3>Alterar Senha</h3>
+                            <p>Mude sua Senha a qualquer momento.</p>
+
+                        </div>
+
+                        <div class="option" onclick="openModal('modal-confirm-msg')">
+
+                            <h3>Apagar conta</h3>
+                            <p><strong>Atenção: </strong>Sua conta será excluída definitivamente após esse processo.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </main>
+
+        </div>
+
+        <div class="modal" id="modal-new-name">
+            <div class="modal-content">
+
+                <span class="close-modal">&times;</span>
+                
+                <h1>Alterar nome</h1>
+
+                <div class="input-group">
+                    <input type="text" id="input-name" placeholder="">
+                    <label for="input-name">Digite o novo nome</label>
+                </div>
+
+                <button id="btn-new-name">Confirmar</button>
+
+            </div>
+        </div>
+
+        <div class="modal" id="modal-new-email">
+            <div class="modal-content">
+
+                <span class="close-modal">&times;</span>
+                
+                <h1>Alterar email</h1>
+
+                <div class="input-group">
+                    <input type="text" id="input-email" placeholder="">
+                    <label for="input-email">Digite o novo email</label>
+                </div>
+
+                <button id="btn-new-email">Confirmar</button>
+
+            </div>
+        </div>
+
+        <div class="modal" id="modal-new-password">
+            <div class="modal-content">
+
+                <span class="close-modal">&times;</span>
+                
+                <h1>Alterar senha</h1>
+
+                <div class="input-group">
+                    <input type="text" id="input-password" placeholder="">
+                    <label for="input-password">Digite a nova senha</label>
+                </div>
+
+                <button id="btn-new-password">Confirmar</button>
+
+            </div>
+        </div>
+
+        <div class="modal" id="modal-confirm-password">
+            <div class="modal-content">
+
+                <span class="close-modal">&times;</span>
+                
+                <h1>Confirme sua senha</h1>
+
+                <div class="input-group">
+                    <input type="text" id="input-confirm-password" placeholder="">
+                    <label for="input-confirm-password">Digite sua senha</label>
+                </div>
+
+                <button id="btn-confirmation-password">Confirmar</button>
+
+            </div>
+        </div>
+
+        <div class="modal" id="modal-confirm-msg">
+            <div class="modal-content">
+
+                <span class="close-modal">&times;</span>
+                
+                <h1>Tem certeza que deseja excluir sua conta?</h1>
+
+                <strong>Se decidir apagar sua conta, seus dados serão, completamente, removidos do nosso banco de dados.</strong>
+                <br>
+                <button id="btn-confirmation">Sim, desejo apagar minha conta</button>
+
+            </div>
+        </div>
+
+        
+    </body>
+</html>

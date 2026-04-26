@@ -1,0 +1,28 @@
+.settings-modal {
+    display: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    right: -50px;
+    top: 120px;
+    background-color: var(--bg-dark);
+    padding: 10px;
+    color: var(--primary-green);
+    margin: 0;
+    border-radius: 10px;
+    border: 1px dashed var(--border-color);
+}
+
+.settings-list {
+    list-style: none;
+}
+
+.settings-list li {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.settings-list li:hover {
+    background-color: var(--secondary-green);
+}
