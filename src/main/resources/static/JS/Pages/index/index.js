@@ -1,10 +1,15 @@
 let isLogin = true;
+
 function changePanel() {
+
     isLogin = !isLogin;
     const title = document.getElementById('auth-title');
     const nameField = document.getElementById('name-field');
     const btn = document.querySelector('.btn-primary');
     const toggleText = document.getElementById('toggle-text');
+    
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(i => i.value = "");
 
     if (!isLogin) {
         title.innerText = "Crie sua credencial de acesso.";
@@ -17,4 +22,5 @@ function changePanel() {
         btn.innerText = "Iniciar Sessão";
         toggleText.innerHTML = 'Não possui acesso? <a href="#" onclick="changePanel()">Criar conta</a>';
     }
+
 }

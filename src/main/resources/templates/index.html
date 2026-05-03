@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Database Query | Acesso</title>
-    <link rel="stylesheet" href="../static/CSS/pages/index.css">
-    <link rel="stylesheet" href="../static/CSS/global-styles.css">
-    <link rel="stylesheet" href="../static/CSS/Components/input-group.css">
-    <link href="https://googleapis.com" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <div class="auth-card">
-            <!-- Cabeçalho -->
-            <div class="header">
-                <div class="logo">⚡ AI<span>Query</span></div>
-                <p id="auth-title">Bem-vindo de volta, Comandante.</p>
-            </div>
-
-            <!-- Formulário -->
-            <form id="auth-form">
-                <div class="input-group" id="name-field" style="display: none;">
-                    <input type="text" id="name" placeholder="">
-                    <label for="name">Nome Completo</label>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AI Database Query | Acesso</title>
+        <link rel="stylesheet" href="../static/CSS/pages/index.css">
+        <link rel="stylesheet" href="../static/CSS/global-styles.css">
+        <link rel="stylesheet" href="../static/CSS/Components/input-group.css">
+        <link rel="stylesheet" href="../static/CSS/Components/message-box.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="auth-card">
+                <!-- Cabeçalho -->
+                <div class="header">
+                    <div class="logo">⚡ AI<span>Query</span></div>
+                    <p id="auth-title">Bem-vindo de volta, Comandante.</p>
                 </div>
 
-                <div class="input-group">
-                    <input type="email" id="email" placeholder="" required>
-                    <label for="email">E-mail</label>
+                <!-- Formulário -->
+                <form id="auth-form">
+                    <div class="input-group" id="name-field" style="display: none;">
+                        <input type="text" id="name" placeholder="">
+                        <label for="name">Nome Completo</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="" required>
+                        <label for="email">E-mail</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="" minlength="8" required>
+                        <label for="password">Senha de Acesso</label>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="btn-submit">Iniciar Sessão</button>
+                </form>
+
+                <!-- Rodapé do Card -->
+                <div class="footer">
+                    <p id="toggle-text">Não possui acesso? <a href="#" onclick="changePanel()">Criar conta</a></p>
                 </div>
-
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="" required>
-                    <label for="password">Senha de Acesso</label>
-                </div>
-
-                <button type="submit" class="btn-primary">Iniciar Sessão</button>
-            </form>
-
-            <!-- Rodapé do Card -->
-            <div class="footer">
-                <p id="toggle-text">Não possui acesso? <a href="#" onclick="changePanel()">Criar conta</a></p>
             </div>
         </div>
-    </div>
-
-    <script src="../static/JS/Pages/index/index.js">
-
-    </script>
-</body>
+        <script type="module" src="../static/JS/Pages/index/auth.js"></script>
+        <script src="../static/JS/Pages/index/index.js"></script>
+    </body>
 </html>

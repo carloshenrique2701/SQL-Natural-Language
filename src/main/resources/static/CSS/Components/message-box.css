@@ -1,0 +1,19 @@
+.message-box {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.success-box {
+    background-color: #4ca5495e;
+    border: 1px solid rgb(21, 226, 14);
+    color: rgb(21, 226, 14);
+}
+
+.error-box {
+    background-color: #a549495e;
+    border: 1px solid rgb(226, 14, 14);
+    color: rgb(226, 14, 14);
+}

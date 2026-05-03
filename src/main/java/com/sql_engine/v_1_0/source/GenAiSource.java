@@ -2,6 +2,7 @@ package com.sql_engine.v_1_0.source;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.sql_engine.v_1_0.services.NaturalLanguageQueryService;
 
 @RestController
 @RequestMapping(value="api/genAi")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class GenAiSource {
 
 	@Autowired
