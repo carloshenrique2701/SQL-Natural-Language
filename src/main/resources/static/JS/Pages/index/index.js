@@ -14,7 +14,7 @@ function changePanel() {
     if (!isLogin) {
         title.innerText = "Crie sua credencial de acesso.";
         nameField.style.display = "block";
-        btn.innerText = "Registrar na Base";
+        btn.innerText = "Registrar";
         toggleText.innerHTML = 'Já possui conta? <a href="#" onclick="changePanel()">Fazer Login</a>';
     } else {
         title.innerText = "Bem-vindo de volta, Comandante.";

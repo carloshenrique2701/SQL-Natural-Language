@@ -78,7 +78,7 @@ public class UserService {
 		obj.setPassword(encodedPassword);
 		
 		if (obj.getDbCredentials() == null) {
-			obj.setDbCredentials(new DbCredentials("dev", "Dev202714", "jdbc:mysql://localhost:3306/rede_lojas_roupas"));
+			obj.setDbCredentials(new DbCredentials("root", "", "jdbc:mysql://localhost:3306/rede_lojas_roupas"));
 		}
 		
 		if (obj.getDbCredentials() != null && obj.getDbCredentials().getPassword() != null) {
@@ -104,6 +104,9 @@ public class UserService {
 		entity.setEmail(obj.getEmail());
 		String criptedPassword = encoder.encode(obj.getPassword());
 		entity.setPassword(criptedPassword);	
+		criptedPassword = cryptoUtils.encrypt(obj.getDbCredentials().getPassword());
+		obj.getDbCredentials().setPassword(criptedPassword);
+		entity.setDbCredentials(obj.getDbCredentials());
 	}
 	
 	public User login(String email, String password) {

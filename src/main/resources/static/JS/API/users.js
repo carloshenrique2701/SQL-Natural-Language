@@ -9,6 +9,18 @@ export async function newUser(user) {
 
 }
 
+export async function checkEmailAndPassword(email, password) {
+    
+    return apiClient('/users/login', {
+        method: "POST",
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    })
+
+}
+
 export async function userUpdate(id, user) {
     
     return apiClient(`/users/${id}`, {

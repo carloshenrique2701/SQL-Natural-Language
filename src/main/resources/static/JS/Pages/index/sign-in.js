@@ -21,11 +21,16 @@ export async function signIn() {
             dbCredentials: null
         });
 
-        localStorage.setItem("user", data.user);
+        localStorage.setItem("Token", data.token);
+        localStorage.setItem("User", data.user);
         createMessage("Cadastro realizado com sucesso!", false);
 
+        setInterval(() => {
+            window.location.href = "../templates/Pages/chat.html";
+        }, 1500);
+
     } catch (error) {
-        createMessage("Erro no servidor",true);
+        createMessage("Erro no servidor.",true);
         console.error("Erro detalhado:", error);
     } finally {
         btn.textContent = btnOrigin;

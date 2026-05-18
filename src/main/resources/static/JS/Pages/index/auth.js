@@ -1,4 +1,5 @@
 import { signIn } from './sign-in.js';
+import { logIn } from './log-in.js';
 import { createMessage } from './utils/errorUserLog.js';
 
 const form = document.getElementById("auth-form");
@@ -22,6 +23,7 @@ form.addEventListener("submit", async (e) => {
         if (email === "" || password === "") {
             return createMessage("TODOS OS CAMPOS DEVEM ESTAR PREENCHIDOS.", true);
         }
+        await logIn();
     }
 
 });
