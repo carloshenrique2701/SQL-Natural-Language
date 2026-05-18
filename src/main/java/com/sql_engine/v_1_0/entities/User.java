@@ -3,6 +3,7 @@ package com.sql_engine.v_1_0.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -32,6 +33,7 @@ public class User implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "db_credentials_id")
+	@JsonIgnore
 	private DbCredentials dbCredentials;
 
 	public User() {

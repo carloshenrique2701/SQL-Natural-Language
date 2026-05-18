@@ -6,10 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sql_engine.v_1_0.config.security.SecurityDataBaseConfig;
+import com.sql_engine.v_1_0.entities.DbCredentials;
 import com.sql_engine.v_1_0.entities.User;
 import com.sql_engine.v_1_0.repositories.UserRepository;
 import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
@@ -26,12 +30,22 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Autowired
 	private SecurityDataBaseConfig cryptoUtils;
 	
 	public List<User> findAll() {
 		return repository.findAll();
+	}
+
+	public User getAuthenticatedUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+			throw new InvalidCredentialsException();
+		}
+		String email = authentication.getName();
+		return repository.findByEmail(email)
+				.orElseThrow(() -> new InvalidCredentialsException());
 	}
 	
 	public User findById(Long id) {
@@ -60,11 +74,17 @@ public class UserService {
 			throw new DatabaseException("Email already registered: " + obj.getEmail());
 		}
 		
-		String criptedUserPassword = encoder.encode(obj.getPassword());
-		obj.setPassword(criptedUserPassword);	
+		String encodedPassword = encoder.encode(obj.getPassword());
+		obj.setPassword(encodedPassword);
 		
-		String criptedDbPassword = cryptoUtils.encrypt(obj.getDbCredentials().getPassword());
-		obj.getDbCredentials().setPassword(criptedDbPassword);
+		if (obj.getDbCredentials() == null) {
+			obj.setDbCredentials(new DbCredentials("dev", "Dev202714", "jdbc:mysql://localhost:3306/rede_lojas_roupas"));
+		}
+		
+		if (obj.getDbCredentials() != null && obj.getDbCredentials().getPassword() != null) {
+			String encryptedDbPassword = cryptoUtils.encrypt(obj.getDbCredentials().getPassword());
+			obj.getDbCredentials().setPassword(encryptedDbPassword);
+		}
 		
 		return repository.save(obj);
 	}

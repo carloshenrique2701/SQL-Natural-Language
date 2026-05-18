@@ -1,0 +1,74 @@
+==============Criar usuário 1==============
+
+curl -X POST http://localhost:8080/users \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Carlos",
+  "email": "carlos@email.com",
+  "password": "123456"
+}' |  jq
+
+
+
+==============Criar usuário 2==============
+
+curl -X POST http://localhost:8080/users \
+-H "Content-Type: application/json" \
+-d '{
+  "name": null,
+  "email": "maria@email.com",
+  "password": "abcdef"
+}' | jq
+
+
+
+==============Login válido==============
+
+curl -X POST http://localhost:8080/users/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "carlos@email.com",
+  "password": "123456"
+}' | jq
+
+
+
+==============Login inválido (senha errada)==============
+
+curl -X POST http://localhost:8080/users/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "carlos@email.com",
+  "password": "000000"
+}' | jq
+
+
+
+==============Deletar usuário==============
+
+curl -X DELETE http://localhost:8080/users/5
+
+
+==============Editar usuário==============
+
+curl -X PUT http://localhost:8080/users/3 \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Maria",
+  "email": "maria@email.com",
+  "password": "abcdef"
+}' | jq
+
+
+==============Gemini chat==============
+
+curl -X POST http://localhost:8080/api/genAi \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAZW1haWwuY29tIiwiaWF0IjoxNzc4NDQ2MTQ4LCJleHAiOjE3Nzg1MzI1NDh9.BaZ4rFKntq4gtEbVJqsNqUxxhm8JqObplgzU5nobt_A" \
+-d '{
+  "userQuery": "Em relação as vendas, quantas foram realizadas no período de 1 ano?",
+  "model": "gemini-2.5-flash"
+}' | jq
+
+
+

@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sql_engine.v_1_0.entities.User;
+import com.sql_engine.v_1_0.entities.dto.LoginRequest;
+import com.sql_engine.v_1_0.entities.dto.LoginResponse;
 import com.sql_engine.v_1_0.services.UserService;
+import com.sql_engine.v_1_0.config.security.JwtUtils;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -27,10 +30,15 @@ public class UserSource {
 	@Autowired
 	private UserService service;
 
+	@Autowired
+	private JwtUtils jwtUtils;
+
 	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody User loginRequest) {
-		User obj = service.login(loginRequest.getEmail(), loginRequest.getPassword());
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+		User obj = service.login(loginRequest.email(), loginRequest.password());
+		String token = jwtUtils.generateJwtToken(obj.getEmail());
+		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail());
+		return ResponseEntity.ok().body(response);
 	}
 
 	@GetMapping
@@ -46,10 +54,12 @@ public class UserSource {
 	}
 
 	@PostMapping
-	public ResponseEntity<User> register(@RequestBody User obj) {
+	public ResponseEntity<LoginResponse> register(@RequestBody User obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		String token = jwtUtils.generateJwtToken(obj.getEmail());
+		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail());
+		return ResponseEntity.created(uri).body(response);
 	}
 
 	@DeleteMapping(value = "/{id}")

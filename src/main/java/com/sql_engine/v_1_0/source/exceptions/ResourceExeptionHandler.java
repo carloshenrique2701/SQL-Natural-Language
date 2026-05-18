@@ -11,6 +11,7 @@ import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
 import com.sql_engine.v_1_0.services.exceptions.ai.AiConsultationException;
 import com.sql_engine.v_1_0.services.exceptions.ai.DatabaseSecurityException;
 import com.sql_engine.v_1_0.services.exceptions.users.InvalidCredentialsException;
+import com.sql_engine.v_1_0.services.exceptions.users.InvalidCredentialsException;
 import com.sql_engine.v_1_0.services.exceptions.users.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;

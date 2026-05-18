@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class DbCredentials implements Serializable {
 	@OneToOne(mappedBy = "dbCredentials")
 	private User user;
 	private String username;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	private String url;
 	
