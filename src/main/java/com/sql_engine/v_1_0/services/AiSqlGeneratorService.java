@@ -27,8 +27,11 @@ public class AiSqlGeneratorService {
 				Instrução: converta a pergunta do usuário em um SQL SELECT que possa responder-la.
 				ex: 'Quantos funcionários eu tenho no total?' retorno: 'SELECT count(id) FROM tb_sellers;'
 				
-				Se a pergunta for muito genérica, como 'Me mostre os funcionários', retorne um SQL que limite o número de resultados, 
-				como 'SELECT * FROM tb_sellers LIMIT 10;'
+				Se a pergunta for muito genérica, como 'Me mostre os funcionários', retorne um SQL que limite o número de resultados em no máximo 20, 
+				como 'SELECT * FROM tb_sellers LIMIT 20;'
+
+				Se a pergunta não for compreendida, use de um select para "printar" a mensagem (se possível, diga o motivo):
+				SELECT 'Não consegui compreender sua pergunta pois {MOTIVO}, pode refazê-la?' AS Resultado;
 				
 				Seu retorno deve conter somente a query conforme o exemplo, sem explicações ou markdown.
 
@@ -53,7 +56,7 @@ public class AiSqlGeneratorService {
 				Pergunta: Quantos funcionários eu tenho no total?
 				Seu retorno deve ser: <p>Você tem um total de 100 funcionários.</p>
 				
-				Retorne somente o HTML, sem explicações ou markdown.
+				Retorne SOMENTE o HTML, sem explicações ou markdown. Caso necessário, use CSS in-line para ajustar a estilização (em caso de tabelas, por exemplo), opte por cores escuras, principalmente: #28a05a e #161b22.
 				
 				Pergunta: %s
 				resposta: %s

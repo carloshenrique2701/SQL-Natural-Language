@@ -71,7 +71,7 @@ body {
     gap: 10px;
     padding-top: 20px;
     cursor: pointer;
-    padding: 10px 10px ;
+    padding: 10px 10px;
     border: 1px dashed var(--border-color);
     border-radius: 10px;
 }
@@ -123,6 +123,7 @@ body {
     padding: 15px 20px;
     border-radius: 12px;
     line-height: 1.5;
+    overflow-x: auto;
 }
 
 .ai .msg-content {
@@ -137,7 +138,7 @@ body {
 
 .user .msg-content {
     background: var(--primary-green);
-    color: #000;
+    color: var(--text-main);
     font-weight: 500;
     border-bottom-right-radius: 2px;
 }
@@ -185,8 +186,8 @@ body {
     cursor: text;
 }
 
-.input-wrapper input:focus + label,
-.input-wrapper input:not(:placeholder-shown) + label {
+.input-wrapper input:focus+label,
+.input-wrapper input:not(:placeholder-shown)+label {
     transform: translateY(-235%);
     color: var(--primary-green);
     background-color: var(--card-bg);
@@ -207,3 +208,119 @@ body {
     scale: 0.96;
 }
 
+/* From Uiverse.io by june7011 */
+.radio-container {
+    --primary-green-opacity: #2ecc702f;
+
+    /* change this according inputs count */
+    --total-radio: 3;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    bottom: 90px;
+    padding-left: 0.5rem;
+}
+
+.radio-container input {
+    cursor: pointer;
+    appearance: none;
+}
+
+.radio-container .glider-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(0deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(27, 27, 27, 1) 50%,
+            rgba(0, 0, 0, 0) 100%);
+    width: 1px;
+}
+
+.radio-container .glider-container .glider {
+    position: relative;
+    height: calc(100% / var(--total-radio));
+    width: 100%;
+    background: linear-gradient(0deg,
+            rgba(0, 0, 0, 0) 0%,
+            var(--main-color) 50%,
+            rgba(0, 0, 0, 0) 100%);
+    transition: transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56);
+}
+
+.radio-container .glider-container .glider::before {
+    content: "";
+    position: absolute;
+    height: 60%;
+    width: 1000%;
+    top: 40%;
+    transform: translateY(-50%);
+    background: var(--primary-green);
+    filter: blur(10px);
+}
+
+.radio-container .glider-container .glider::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 80%;
+    width: 150px;
+    background: linear-gradient(90deg,
+            var(--primary-green-opacity) 0%,
+            rgba(0, 0, 0, 0) 100%);
+}
+
+.radio-container label {
+    cursor: pointer;
+    padding: 1rem;
+    position: relative;
+    color: grey;
+    transition: all 0.3s ease-in-out;
+}
+
+.radio-container input:checked+label {
+    color: var(--primary-green);
+}
+
+.radio-container input:nth-of-type(1):checked~.glider-container .glider {
+    transform: translateY(0);
+}
+
+.radio-container input:nth-of-type(2):checked~.glider-container .glider {
+    transform: translateY(75%);
+}
+
+.radio-container input:nth-of-type(3):checked~.glider-container .glider {
+    transform: translateY(150%);
+}
+
+.radio-container input:nth-of-type(4):checked~.glider-container .glider {
+    transform: translateY(225%);
+}
+
+.radio-container input:nth-of-type(5):checked~.glider-container .glider {
+    transform: translateY(400%);
+}
+
+.radio-container input:nth-of-type(6):checked~.glider-container .glider {
+    transform: translateY(500%);
+}
+
+.radio-container input:nth-of-type(7):checked~.glider-container .glider {
+    transform: translateY(600%);
+}
+
+.radio-container input:nth-of-type(8):checked~.glider-container .glider {
+    transform: translateY(700%);
+}
+
+.radio-container input:nth-of-type(9):checked~.glider-container .glider {
+    transform: translateY(800%);
+}
+
+.radio-container input:nth-of-type(10):checked~.glider-container .glider {
+    transform: translateY(900%);
+}

@@ -1,5 +1,7 @@
 package com.sql_engine.v_1_0.source;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +16,7 @@ import com.sql_engine.v_1_0.services.NaturalLanguageQueryService;
 import com.sql_engine.v_1_0.services.UserService;
 
 @RestController
-@RequestMapping(value="api/genAi")
+@RequestMapping(value="api/genai")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class GenAiSource {
 
@@ -25,7 +27,7 @@ public class GenAiSource {
 	private UserService userService;
 	
 	@PostMapping
-	public ResponseEntity<String> apiReq(@RequestBody QueryRequest request) {
+	public ResponseEntity<Map<String, String>> apiReq(@RequestBody QueryRequest request) {
 		User authenticatedUser = userService.getAuthenticatedUser();
 
 		String res = service.htmlDataApresentation(
@@ -33,7 +35,7 @@ public class GenAiSource {
 				request.model(),
 				authenticatedUser);
 				
-		return ResponseEntity.ok().body(res);
+		return ResponseEntity.ok().body(Map.of("res", res));
 	}
 	
 }

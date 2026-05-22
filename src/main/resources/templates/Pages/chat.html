@@ -38,24 +38,37 @@
                     <!-- Mensagem IA -->
                     <div class="message ai">
                         <div class="msg-content">
-                            Olá! Sou seu assistente de dados. Qual query ou análise você deseja realizar hoje?
-                        </div>
-                    </div>
-
-                    <!-- Mensagem Usuário -->
-                    <div class="message user">
-                        <div class="msg-content">
-                            Selecione os 5 produtos mais vendidos no último mês que estão com estoque baixo.
+                            Olá! Sou seu assistente de dados. O que deseja que eu busque no seu banco de dados? Para a segurança do seu banco de dados, não salvamos nossas conversas. Sinta-se à vontade para perguntar o que quiser!
                         </div>
                     </div>
 
                 </div>
 
+                <!-- From Uiverse.io by june7011 --> 
+                <div class="radio-container">
+                    <input checked="" id="gen-2-5" data-version="gemini-2.5-flash" name="radio" class="gemini-option" type="radio" />
+                    <label for="gen-2-5">Gemini 2.5 flash</label>
+
+                    <input id="gen-2-5-lite" data-version="gemini-2.5-flash-lite" name="radio" class="gemini-option" type="radio" />
+                    <label for="gen-2-5-lite">Gemini 2.5 Flash Lite</label>
+
+                    <input id="gen-3-5" data-version="gemini-3.5-flash" name="radio" class="gemini-option" type="radio" />
+                    <label for="gen-3-5">Gemini 3.5 Flash</label>
+                    
+                    <input id="gen-3-1" data-version="gemini-3.1-flash-lite" name="radio" class="gemini-option" type="radio" />
+                    <label for="gen-3-1">Gemini 3.1 Flash Lite</label>
+
+                    <div class="glider-container">
+                        <div class="glider"></div>
+                    </div>
+                </div>
+
+
                 <div class="input-container">
                     <div class="input-wrapper">
                         <input type="text" id="user-request" placeholder="">
                         <label for="user-request">Consulte no banco de dados aqui...</label>
-                        <button class="send-btn">
+                        <button class="send-btn" id="send-btn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         </button>
                     </div>
@@ -111,6 +124,6 @@
         <script src="../../static/JS/Pages/chat/chat.js"></script>
         <script type="module"  src="../../static/JS/Components/modal-dbConfiguration.js"></script>
         <script type="module"  src="../../static/JS/Components/modal-chat-settings.js"></script>
-
+        <script type="module" src="../../static/JS/Pages/chat/talk.js"></script>
     </body>
 </html>

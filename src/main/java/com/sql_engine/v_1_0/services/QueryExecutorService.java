@@ -29,6 +29,8 @@ public class QueryExecutorService {
 	public List<Map<String, Object>> executeSelect(String sql, DatabaseCredentials creds) {
 		
 		Statement st = null;
+
+		System.out.println("\n\nQuery: " + sql + "\n\n");
 		
 		try {
 			st = CCJSqlParserUtil.parse(sql);			

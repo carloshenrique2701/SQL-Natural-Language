@@ -21,9 +21,22 @@ export async function signIn() {
             dbCredentials: null
         });
 
+        if (!data || data.id == null || !data.token) {
+            createMessage("Resposta inválida do servidor no cadastro.", true);
+            console.error("Resposta inesperada em sign-in:", data);
+            return;
+        }
+
+        const user = {
+            id: data.id,
+            name: data.name,
+            email: data.email
+        }
+
         localStorage.setItem("Token", data.token);
-        localStorage.setItem("User", data.user);
+        localStorage.setItem("User", JSON.stringify(user));
         createMessage("Cadastro realizado com sucesso!", false);
+
 
         setInterval(() => {
             window.location.href = "../templates/Pages/chat.html";

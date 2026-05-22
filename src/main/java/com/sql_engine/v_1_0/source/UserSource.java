@@ -53,7 +53,7 @@ public class UserSource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PostMapping
+	@PostMapping("/sigin")
 	public ResponseEntity<LoginResponse> register(@RequestBody User obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

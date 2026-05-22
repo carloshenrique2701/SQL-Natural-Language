@@ -15,8 +15,14 @@ export async function logIn() {
         
         const data = await checkEmailAndPassword(email, password);
 
+        const user = {
+            id: data.id,
+            name: data.name,
+            email: data.email,
+        };
+
         localStorage.setItem("Token", data.token);
-        localStorage.setItem("User", data.user);
+        localStorage.setItem("User", JSON.stringify(user));
         createMessage("Login realizado com sucesso!", false);
 
         setInterval(() => {
@@ -24,7 +30,7 @@ export async function logIn() {
         }, 1500);
 
     } catch (error) {
-        createMessage("Erro no servidor.", true);
+        createMessage(error.message || "Erro no servidor.", true);
         console.log("Erro detalhado: ", error);
     } finally {
         btn.textContent = btnOrigin;

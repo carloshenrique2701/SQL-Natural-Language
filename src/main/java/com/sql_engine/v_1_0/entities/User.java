@@ -45,7 +45,7 @@ public class User implements Serializable {
 		this.email = email;
 		this.password = password;
 	    if (dbCredentials == null) {
-	        this.dbCredentials = new DbCredentials("dev", "Dev202714", "jdbc:mysql://localhost:3306/rede_lojas_roupas");
+	        this.dbCredentials = new DbCredentials("root", "", "jdbc:mysql://localhost:3306/rede_lojas_roupas");
 	    } else {
 	        this.dbCredentials = dbCredentials;
 	    }

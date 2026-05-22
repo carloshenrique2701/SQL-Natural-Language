@@ -1,6 +1,7 @@
 import { signIn } from './sign-in.js';
 import { logIn } from './log-in.js';
 import { createMessage } from './utils/errorUserLog.js';
+import { validateToken } from '../../API/auth.js'
 
 const form = document.getElementById("auth-form");
 
@@ -24,6 +25,22 @@ form.addEventListener("submit", async (e) => {
             return createMessage("TODOS OS CAMPOS DEVEM ESTAR PREENCHIDOS.", true);
         }
         await logIn();
+    }
+
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const token = localStorage.getItem("Token");
+
+    if (!token) return;
+    console.log(token)
+
+    const data = validateToken(token);
+
+    if (data.ok) {
+        window.location.href = "../templates/Pages/chat.html";
     }
 
 });
