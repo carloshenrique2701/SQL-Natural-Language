@@ -39,30 +39,48 @@ async function checkRequest() {
     `;
     messages.appendChild(userMessage);
 
+    const aiMessage = document.createElement("div");
+    aiMessage.className = "message ai";
+    aiMessage.innerHTML = `
+        <div class="loader">
+          <div class="circle">
+            <div class="dot"></div>
+            <div class="outline"></div>
+          </div>
+          <div class="circle">
+            <div class="dot"></div>
+            <div class="outline"></div>
+          </div>
+          <div class="circle">
+            <div class="dot"></div>
+            <div class="outline"></div>
+          </div>
+          <div class="circle">
+            <div class="dot"></div>
+            <div class="outline"></div>
+          </div>
+        </div>
+    `;
+    messages.appendChild(aiMessage);
+
     try {
         const data = await sendMessage(request, model, token);
         const aiResponse = data?.res ?? "Erro: resposta inesperada do servidor.";
 
-        const aiMessage = document.createElement("div");
-        aiMessage.className = "message ai";
         aiMessage.innerHTML = `
             <div class="msg-content">
                 ${aiResponse}
             </div>
         `;
-        messages.appendChild(aiMessage);
     } catch (error) {
         const aiResponse = error?.response?.data?.res || error?.message || "Erro no servidor. Tente novamente.";
 
-        const aiMessage = document.createElement("div");
-        aiMessage.className = "message ai";
         aiMessage.innerHTML = `
             <div class="msg-content">
                 ${aiResponse}
             </div>
         `;
-        messages.appendChild(aiMessage);
 
         console.error("Erro ao enviar mensagem:", error);
     }
-}
+} 

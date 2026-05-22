@@ -56,6 +56,8 @@ public class AiSqlGeneratorService {
 				Pergunta: Quantos funcionários eu tenho no total?
 				Seu retorno deve ser: <p>Você tem um total de 100 funcionários.</p>
 				
+				Se a pergunta não for compreendida, retorne: <p>Não entendi sua pergunta, pode repetir?</p>
+				
 				Retorne SOMENTE o HTML, sem explicações ou markdown. Caso necessário, use CSS in-line para ajustar a estilização (em caso de tabelas, por exemplo), opte por cores escuras, principalmente: #28a05a e #161b22.
 				
 				Pergunta: %s
