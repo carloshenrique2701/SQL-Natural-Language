@@ -14,10 +14,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user) {
         document.getElementById("user-name").textContent = user.name;
     }
-    const token = localStorage.getItem("Token");
-
-    if (!token) {
-        window.location.href = "../index.html";
-    }
-
+    
 });

@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sql_engine.v_1_0.entities.User;
+import com.sql_engine.v_1_0.entities.dto.DatabaseCredentials;
 import com.sql_engine.v_1_0.entities.dto.LoginRequest;
 import com.sql_engine.v_1_0.entities.dto.LoginResponse;
+import com.sql_engine.v_1_0.entities.dto.UserPasswordUpdate;
+import com.sql_engine.v_1_0.entities.dto.UserProfileUpdate;
 import com.sql_engine.v_1_0.services.UserService;
 import com.sql_engine.v_1_0.config.security.JwtUtils;
 
@@ -71,6 +74,25 @@ public class UserSource {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
 		obj = service.update(id, obj);
+		return ResponseEntity.ok().body(obj);
+	}
+
+	@PutMapping(value = "/{id}/profile")
+	public ResponseEntity<User> updateProfile(@PathVariable Long id, @RequestBody UserProfileUpdate request) {
+		User obj = service.updateProfile(id, request);
+		return ResponseEntity.ok().body(obj);
+	}
+
+	@PutMapping(value = "/{id}/password")
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordUpdate request) {
+		service.updatePassword(id, request);
+		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping(value = "/{id}/db-credentials")
+	public ResponseEntity<User> updateDbCredentials(@PathVariable Long id,
+			@RequestBody DatabaseCredentials request) {
+		User obj = service.updateDbCredentials(id, request);
 		return ResponseEntity.ok().body(obj);
 	}
 

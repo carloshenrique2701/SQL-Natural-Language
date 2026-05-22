@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import com.sql_engine.v_1_0.config.security.SecurityDataBaseConfig;
 import com.sql_engine.v_1_0.entities.DbCredentials;
 import com.sql_engine.v_1_0.entities.User;
+import com.sql_engine.v_1_0.entities.dto.DatabaseCredentials;
+import com.sql_engine.v_1_0.entities.dto.UserPasswordUpdate;
+import com.sql_engine.v_1_0.entities.dto.UserProfileUpdate;
 import com.sql_engine.v_1_0.repositories.UserRepository;
 import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
 import com.sql_engine.v_1_0.services.exceptions.users.InvalidCredentialsException;
@@ -99,16 +102,76 @@ public class UserService {
 		}
 	}
 
-	private void insertUpdatedValues(User entity, User obj) {
-		entity.setName(obj.getName());
-		entity.setEmail(obj.getEmail());
-		String criptedPassword = encoder.encode(obj.getPassword());
-		entity.setPassword(criptedPassword);	
-		criptedPassword = cryptoUtils.encrypt(obj.getDbCredentials().getPassword());
-		obj.getDbCredentials().setPassword(criptedPassword);
-		entity.setDbCredentials(obj.getDbCredentials());
+	public User updateProfile(Long id, UserProfileUpdate updateRequest) {
+		try {
+			User entity = repository.getReferenceById(id);
+			if (updateRequest.name() != null) {
+				entity.setName(updateRequest.name());
+			}
+			if (updateRequest.email() != null) {
+				entity.setEmail(updateRequest.email());
+			}
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
-	
+
+	public User updatePassword(Long id, UserPasswordUpdate passwordRequest) {
+		if (passwordRequest.password() == null || passwordRequest.password().isBlank()) {
+			throw new IllegalArgumentException("Password cannot be null or empty.");
+		}
+		try {
+			User entity = repository.getReferenceById(id);
+			entity.setPassword(encoder.encode(passwordRequest.password()));
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+
+	public User updateDbCredentials(Long id, DatabaseCredentials credentialsRequest) {
+		try {
+			User entity = repository.getReferenceById(id);
+			DbCredentials credentials = entity.getDbCredentials();
+			if (credentials == null) {
+				credentials = new DbCredentials();
+			}
+			if (credentialsRequest.username() != null) {
+				credentials.setUsername(credentialsRequest.username());
+			}
+			if (credentialsRequest.url() != null) {
+				credentials.setUrl(credentialsRequest.url());
+			}
+			if (credentialsRequest.password() != null) {
+				credentials.setPassword(cryptoUtils.encrypt(credentialsRequest.password()));
+			}
+			entity.setDbCredentials(credentials);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+
+	private void insertUpdatedValues(User entity, User obj) {
+		if (obj.getName() != null) {
+			entity.setName(obj.getName());
+		}
+		if (obj.getEmail() != null) {
+			entity.setEmail(obj.getEmail());
+		}
+		if (obj.getPassword() != null) {
+			entity.setPassword(encoder.encode(obj.getPassword()));
+		}
+		if (obj.getDbCredentials() != null) {
+			DbCredentials credentials = obj.getDbCredentials();
+			if (credentials.getPassword() != null) {
+				credentials.setPassword(cryptoUtils.encrypt(credentials.getPassword()));
+			}
+			entity.setDbCredentials(credentials);
+		}
+	}
+
 	public User login(String email, String password) {
 		return repository.findByEmail(email)
 				.filter(user -> encoder.matches(password, user.getPassword()))
