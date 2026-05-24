@@ -2,13 +2,13 @@ import { validateToken, clearAuth } from '../API/auth.js';
 
 function redirectToLogin() {
     clearAuth();
-    window.location.replace('/index.html');
+    window.location.replace('/index');
 }
 
 async function checkAccessControl() {
     const token = localStorage.getItem('Token');
     
-    if (!token) window.location.href = "../index.html";
+    if (!token) window.location.href = "/index";
 
     try {
         await validateToken(token);

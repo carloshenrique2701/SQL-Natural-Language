@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = validateToken(token);
 
     if (data.ok) {
-        window.location.href = "../templates/Pages/chat.html";
+        window.location.href = "/chat.html";
     }
 
 });

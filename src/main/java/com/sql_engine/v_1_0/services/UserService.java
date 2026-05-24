@@ -46,8 +46,8 @@ public class UserService {
 		if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
 			throw new InvalidCredentialsException();
 		}
-		String email = authentication.getName();
-		return repository.findByEmail(email)
+		Long userId = Long.valueOf(authentication.getName());
+		return repository.findById(userId)
 				.orElseThrow(() -> new InvalidCredentialsException());
 	}
 	

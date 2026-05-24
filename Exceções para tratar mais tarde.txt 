@@ -1,0 +1,4 @@
+UsernameNotFoundException
+
+TemplateInputException: Error resolving template [templates/Pages/chat], template might not exist or might not be accessible by any of the configured Template Resolvers
+

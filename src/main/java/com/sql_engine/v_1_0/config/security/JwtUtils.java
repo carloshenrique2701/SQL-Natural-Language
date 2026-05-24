@@ -23,18 +23,29 @@ public class JwtUtils {
     @Value("${app.jwt.expirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(String username) {
+    public String generateJwtToken(Long userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userId.toString())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
+    public Long getUserIdFromJwtToken(String token) {
+        String userId = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+        return Long.valueOf(userId);
+    }
+
+    @Deprecated(since = "2.0", forRemoval = true)
     public String getEmailFromJwtToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())

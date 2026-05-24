@@ -39,12 +39,12 @@ export async function signIn() {
 
 
         setInterval(() => {
-            window.location.href = "../templates/Pages/chat.html";
+            window.location.href = "/chat";
         }, 1500);
 
     } catch (error) {
-        createMessage("Erro no servidor.",true);
-        console.error("Erro detalhado:", error);
+        createMessage(error.message || "Erro no servidor.", true);
+        console.log("Erro detalhado: ", error);
     } finally {
         btn.textContent = btnOrigin;
         btn.disabled = false;

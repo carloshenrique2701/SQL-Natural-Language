@@ -22,7 +22,8 @@ async function apiClient(endPoint, options = {}) {
         }
 
         if (!response.ok) {
-            const error = new Error(data.message || `HTTP error! status: ${response.status}`);
+            const errorMessage = (data && data.message) ? data.message : `HTTP error! status: ${response.status}`;
+            const error = new Error(errorMessage);
             error.response = { status: response.status, data };
             throw error;
         }

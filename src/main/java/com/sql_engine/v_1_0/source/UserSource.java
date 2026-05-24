@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.sql_engine.v_1_0.config.security.JwtUtils;
 import com.sql_engine.v_1_0.entities.User;
 import com.sql_engine.v_1_0.entities.dto.DatabaseCredentials;
 import com.sql_engine.v_1_0.entities.dto.LoginRequest;
@@ -23,7 +24,6 @@ import com.sql_engine.v_1_0.entities.dto.LoginResponse;
 import com.sql_engine.v_1_0.entities.dto.UserPasswordUpdate;
 import com.sql_engine.v_1_0.entities.dto.UserProfileUpdate;
 import com.sql_engine.v_1_0.services.UserService;
-import com.sql_engine.v_1_0.config.security.JwtUtils;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -39,7 +39,7 @@ public class UserSource {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 		User obj = service.login(loginRequest.email(), loginRequest.password());
-		String token = jwtUtils.generateJwtToken(obj.getEmail());
+		String token = jwtUtils.generateJwtToken(obj.getId());
 		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail());
 		return ResponseEntity.ok().body(response);
 	}
@@ -60,7 +60,7 @@ public class UserSource {
 	public ResponseEntity<LoginResponse> register(@RequestBody User obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		String token = jwtUtils.generateJwtToken(obj.getEmail());
+		String token = jwtUtils.generateJwtToken(obj.getId());
 		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail());
 		return ResponseEntity.created(uri).body(response);
 	}

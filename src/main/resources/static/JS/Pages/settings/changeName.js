@@ -28,8 +28,8 @@ btnNewName.addEventListener("click", async function(event) {
         } else {
             alert("Erro ao atualizar o nome!");
         }
-
-        window.location.reload();
+        
+        document.getElementById("userName").textContent = newName;
 
     } catch (error) {
         console.error("Erro ao atualizar o nome:", error);

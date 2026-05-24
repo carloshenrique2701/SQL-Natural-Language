@@ -3,7 +3,7 @@ document.getElementById("logOut").addEventListener("click", () => {
     localStorage.removeItem("Token");
     localStorage.removeItem("User");
 
-    window.location.href = "../index.html";
+    window.location.href = "/";
 
 });
 

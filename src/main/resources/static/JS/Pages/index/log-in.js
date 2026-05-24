@@ -26,7 +26,7 @@ export async function logIn() {
         createMessage("Login realizado com sucesso!", false);
 
         setInterval(() => {
-            window.location.href = "../templates/Pages/chat.html";
+            window.location.href = "/chat";
         }, 1500);
 
     } catch (error) {
