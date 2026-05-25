@@ -24,3 +24,18 @@ function changePanel() {
     }
 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const token = localStorage.getItem("Token");
+
+    if (!token) return;
+    console.log(token)
+
+    const data = validateToken(token);
+
+    if (data.ok) {
+        window.location.href = "/chat";
+    }
+
+});

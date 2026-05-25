@@ -2,6 +2,7 @@ package com.sql_engine.v_1_0.source;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -86,7 +87,7 @@ public class UserSource {
 	@PutMapping(value = "/{id}/password")
 	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordUpdate request) {
 		service.updatePassword(id, request);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping(value = "/{id}/db-credentials")
@@ -94,6 +95,13 @@ public class UserSource {
 			@RequestBody DatabaseCredentials request) {
 		User obj = service.updateDbCredentials(id, request);
 		return ResponseEntity.ok().body(obj);
+	}
+
+	@PostMapping(value = "/{id}/verify-password")
+	public ResponseEntity<Map<String, Boolean>> verifyPassword(@PathVariable Long id, @RequestBody Map<String, String> request) {
+		String password = request.get("password");
+		boolean isValid = service.verifyPassword(id, password);
+		return ResponseEntity.ok().body(Map.of("valid", isValid));
 	}
 
 }

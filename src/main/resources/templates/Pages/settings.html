@@ -48,7 +48,7 @@
 
                         </div>
 
-                        <div class="option" onclick="openModal('modal-confirm-password')">
+                        <div class="option" onclick="openModal('modal-new-password')">
 
                             <h3>Alterar Senha</h3>
                             <p>Mude sua Senha a qualquer momento.</p>
@@ -113,7 +113,7 @@
                 <h1>Alterar senha</h1>
 
                 <div class="input-group">
-                    <input type="text" id="input-password" placeholder="">
+                    <input type="password" id="input-password" placeholder="">
                     <label for="input-password">Digite a nova senha</label>
                 </div>
 
@@ -130,7 +130,7 @@
                 <h1>Confirme sua senha</h1>
 
                 <div class="input-group">
-                    <input type="text" id="input-confirm-password" placeholder="">
+                    <input type="password" id="input-confirm-password" placeholder="">
                     <label for="input-confirm-password">Digite sua senha</label>
                 </div>
 
@@ -153,10 +153,24 @@
             </div>
         </div>
 
+        <div class="modal" id="modal-delete-account">
+            <div class="modal-content">
+
+                <span class="close-modal">&times;</span>
+                
+                <h1>Apagar Conta</h1>
+
+                <button id="btn-delete-account">Sim, desejo apagar minha conta</button>
+
+            </div>
+        </div>
+
         <script type="module" src="/JS/Pages/accessControl.js"></script>
         <script src="/JS/Pages/settings/settings.js"></script>
         <script type="module" src="/JS/Pages/settings/changeName.js"></script>
         <script type="module" src="/JS/Pages/settings/changeEmail.js"></script>
+        <script type="module" src="/JS/Pages/settings/changePassword.js"></script>
+        <script type="module" src="/JS/Pages/settings/deleteUser.js"></script>
         
     </body>
 </html>

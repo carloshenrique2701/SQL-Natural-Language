@@ -68,10 +68,31 @@ export async function userUpdateCredentials(id, credentials) {
 
 export async function deleteUser(id) {
 
-    return apiClient(`/user/${id}`, {
+    return apiClient(`/users/${id}`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`
         }
+    });
+}
+
+export async function verifyUserPassword(id, password) {
+    return apiClient(`/users/${id}/verify-password`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ password })
+    });
+}
+
+
+export async function userUpdateDatabaseCredentials(id, dbCredentials) {
+    return apiClient(`/users/${id}/db-credentials`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify( dbCredentials )
     });
 }

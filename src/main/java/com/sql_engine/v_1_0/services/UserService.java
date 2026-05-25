@@ -44,11 +44,11 @@ public class UserService {
 	public User getAuthenticatedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
-			throw new InvalidCredentialsException();
+			throw new InvalidCredentialsException(null);
 		}
 		Long userId = Long.valueOf(authentication.getName());
 		return repository.findById(userId)
-				.orElseThrow(() -> new InvalidCredentialsException());
+				.orElseThrow(() -> new InvalidCredentialsException(null));
 	}
 	
 	public User findById(Long id) {
@@ -101,6 +101,25 @@ public class UserService {
 			throw new ResourceNotFoundException(id);
 		}
 	}
+	
+	private void insertUpdatedValues(User entity, User obj) {
+		if (obj.getName() != null) {
+			entity.setName(obj.getName());
+		}
+		if (obj.getEmail() != null) {
+			entity.setEmail(obj.getEmail());
+		}
+		if (obj.getPassword() != null) {
+			entity.setPassword(encoder.encode(obj.getPassword()));
+		}
+		if (obj.getDbCredentials() != null) {
+			DbCredentials credentials = obj.getDbCredentials();
+			if (credentials.getPassword() != null) {
+				credentials.setPassword(cryptoUtils.encrypt(credentials.getPassword()));
+			}
+			entity.setDbCredentials(credentials);
+		}
+	}
 
 	public User updateProfile(Long id, UserProfileUpdate updateRequest) {
 		try {
@@ -119,7 +138,7 @@ public class UserService {
 
 	public User updatePassword(Long id, UserPasswordUpdate passwordRequest) {
 		if (passwordRequest.password() == null || passwordRequest.password().isBlank()) {
-			throw new IllegalArgumentException("Password cannot be null or empty.");
+			throw new InvalidCredentialsException("Password cannot be null or empty.");
 		}
 		try {
 			User entity = repository.getReferenceById(id);
@@ -153,29 +172,24 @@ public class UserService {
 		}
 	}
 
-	private void insertUpdatedValues(User entity, User obj) {
-		if (obj.getName() != null) {
-			entity.setName(obj.getName());
+	
+
+	public boolean verifyPassword(Long id, String password) {
+		if (password == null || password.isBlank()) {
+			return false;
 		}
-		if (obj.getEmail() != null) {
-			entity.setEmail(obj.getEmail());
-		}
-		if (obj.getPassword() != null) {
-			entity.setPassword(encoder.encode(obj.getPassword()));
-		}
-		if (obj.getDbCredentials() != null) {
-			DbCredentials credentials = obj.getDbCredentials();
-			if (credentials.getPassword() != null) {
-				credentials.setPassword(cryptoUtils.encrypt(credentials.getPassword()));
-			}
-			entity.setDbCredentials(credentials);
+		try {
+			User user = repository.getReferenceById(id);
+			return encoder.matches(password, user.getPassword());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
 		}
 	}
 
 	public User login(String email, String password) {
 		return repository.findByEmail(email)
 				.filter(user -> encoder.matches(password, user.getPassword()))
-				.orElseThrow( () -> new InvalidCredentialsException() );
+				.orElseThrow( () -> new InvalidCredentialsException(null) );
 	}
 	
 }
