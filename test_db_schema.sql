@@ -1,7 +1,7 @@
 -- 1. Criação do Banco de Dados
-CREATE DATABASE IF NOT EXISTS `rede_lojas_roupas` 
-DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `rede_lojas_roupas`;
+CREATE DATABASE IF NOT EXISTS `rede_lojas_roupas`;
+
+USE rede_lojas_roupas;
 
 -- 2. Tabelas Base (Independêntes)
 DROP TABLE IF EXISTS `estados`;

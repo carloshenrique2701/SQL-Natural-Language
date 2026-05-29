@@ -27,7 +27,7 @@ form.addEventListener("submit", async (event) => {
         alert("Credenciais de banco de dados atualizadas com sucesso!");
 
     } catch (error) {
-        alert("Ocorreu um erro ao atualizar as credenciais do banco de dados.");
+        alert(error ?? "Ocorreu um erro ao atualizar as credenciais do banco de dados.");
         console.error("Erro ao atualizar as credenciais do banco de dados:", error);
     } finally {
         btnSubmit.disabled = false;

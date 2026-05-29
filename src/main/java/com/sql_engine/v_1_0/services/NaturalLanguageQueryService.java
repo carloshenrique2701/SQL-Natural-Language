@@ -45,7 +45,7 @@ public class NaturalLanguageQueryService {
 	public String htmlDataApresentation(String userReq, String model, User user) {
 		
 		List<Map<String, Object>> data = processQuery(userReq, model, user);
-		System.out.println("\n\n\nData retornada do banco: " + data);
+		
 		if (data.isEmpty()) {
 			return "<p>No results found.</p>";
 		}

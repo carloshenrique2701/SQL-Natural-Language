@@ -41,7 +41,7 @@ public class UserSource {
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 		User obj = service.login(loginRequest.email(), loginRequest.password());
 		String token = jwtUtils.generateJwtToken(obj.getId());
-		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail());
+		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail(), obj.getDbCredentials().getDbName());
 		return ResponseEntity.ok().body(response);
 	}
 
@@ -62,7 +62,7 @@ public class UserSource {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		String token = jwtUtils.generateJwtToken(obj.getId());
-		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail());
+		LoginResponse response = new LoginResponse(token, obj.getId(), obj.getName(), obj.getEmail(), obj.getDbCredentials().getDbName());
 		return ResponseEntity.created(uri).body(response);
 	}
 

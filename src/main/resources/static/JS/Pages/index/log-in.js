@@ -19,6 +19,7 @@ export async function logIn() {
             id: data.id,
             name: data.name,
             email: data.email,
+            dbName: data.dbName
         };
 
         localStorage.setItem("Token", data.token);

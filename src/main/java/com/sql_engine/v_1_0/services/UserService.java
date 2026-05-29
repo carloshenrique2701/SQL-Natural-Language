@@ -37,6 +37,9 @@ public class UserService {
 	@Autowired
 	private SecurityDataBaseConfig cryptoUtils;
 	
+	@Autowired
+	private DbConnectionValidator dbConnectionValidator;
+	
 	public List<User> findAll() {
 		return repository.findAll();
 	}
@@ -81,7 +84,7 @@ public class UserService {
 		obj.setPassword(encodedPassword);
 		
 		if (obj.getDbCredentials() == null) {
-			obj.setDbCredentials(new DbCredentials("root", "", "jdbc:mysql://localhost:3306/rede_lojas_roupas"));
+			obj.setDbCredentials(new DbCredentials("root", "", "jdbc:mysql://localhost:3306/rede_lojas_roupas", "rede_lojas_roupas"));
 		}
 		
 		if (obj.getDbCredentials() != null && obj.getDbCredentials().getPassword() != null) {
@@ -151,24 +154,56 @@ public class UserService {
 
 	public User updateDbCredentials(Long id, DatabaseCredentials credentialsRequest) {
 		try {
+			// Normaliza a URL e extrai credenciais embutidas, se houver
+			DbConnectionValidator.NormalizedConnectionInfo normalized = dbConnectionValidator.normalizeJdbcConnectionInfo(credentialsRequest);
+
+			// Monta um DatabaseCredentials temporário com os valores normalizados para testar a conexão
+			DatabaseCredentials normalizedRequest = new DatabaseCredentials(
+					normalized.url(),
+					normalized.username(),
+					normalized.password(),
+					credentialsRequest.driver()
+			);
+
+			// Testa a conexão usando a URL/credenciais normalizadas
+			String dbName = dbConnectionValidator.testConnection(normalizedRequest);
+
 			User entity = repository.getReferenceById(id);
 			DbCredentials credentials = entity.getDbCredentials();
 			if (credentials == null) {
 				credentials = new DbCredentials();
 			}
-			if (credentialsRequest.username() != null) {
-				credentials.setUsername(credentialsRequest.username());
+
+			// Salva a URL normalizada (sem userinfo)
+			if (normalized.url() != null && !normalized.url().isBlank()) {
+				credentials.setUrl(normalized.url());
 			}
-			if (credentialsRequest.url() != null) {
-				credentials.setUrl(credentialsRequest.url());
+
+			// Se o cliente não enviou username, usa o extraído da URL; caso contrário, usa o enviado
+			String finalUsername = (credentialsRequest.username() == null || credentialsRequest.username().isBlank())
+					? normalized.username() : credentialsRequest.username();
+			if (finalUsername != null && !finalUsername.isBlank()) {
+				credentials.setUsername(finalUsername);
 			}
-			if (credentialsRequest.password() != null) {
-				credentials.setPassword(cryptoUtils.encrypt(credentialsRequest.password()));
+
+			// Semelhante para senha: prioriza a senha enviada; se não houver, usa a extraída da URL
+			String rawPassword = (credentialsRequest.password() == null || credentialsRequest.password().isBlank())
+					? normalized.password() : credentialsRequest.password();
+			if (rawPassword != null && !rawPassword.isBlank()) {
+				credentials.setPassword(cryptoUtils.encrypt(rawPassword));
 			}
+
+			credentials.setDbName(dbName);
+
 			entity.setDbCredentials(credentials);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
+		} catch (com.sql_engine.v_1_0.services.exceptions.ai.DatabaseSecurityException e) {
+			// Propaga para o handler específico manter a mensagem de validação
+			throw e;
+		} catch (Exception e) {
+			throw new DatabaseException("Erro ao atualizar credenciais do DB: " + e.getMessage());
 		}
 	}
 

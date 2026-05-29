@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("Token");
 
     if (!token) return;
-    console.log(token)
 
     const data = validateToken(token);
 

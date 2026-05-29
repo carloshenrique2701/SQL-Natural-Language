@@ -45,16 +45,6 @@ public class JwtUtils {
         return Long.valueOf(userId);
     }
 
-    @Deprecated(since = "2.0", forRemoval = true)
-    public String getEmailFromJwtToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
-
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parserBuilder()

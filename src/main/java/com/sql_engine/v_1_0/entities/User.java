@@ -31,9 +31,9 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "db_credentials_id")
-	@JsonIgnore
 	private DbCredentials dbCredentials;
 
 	public User() {
@@ -44,11 +44,7 @@ public class User implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.password = password;
-	    if (dbCredentials == null) {
-	        this.dbCredentials = new DbCredentials("root", "", "jdbc:mysql://localhost:3306/rede_lojas_roupas");
-	    } else {
-	        this.dbCredentials = dbCredentials;
-	    }
+	    this.dbCredentials = dbCredentials;
 	}
 
 	public Long getId() {

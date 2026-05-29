@@ -30,7 +30,8 @@ export async function signIn() {
         const user = {
             id: data.id,
             name: data.name,
-            email: data.email
+            email: data.email,
+            dbName: data.dbName
         }
 
         localStorage.setItem("Token", data.token);

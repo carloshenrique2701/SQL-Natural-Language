@@ -30,14 +30,16 @@ public class DbCredentials implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	private String url;
+	private String dbName;
 	
 	public DbCredentials() {
 	}
 
-	public DbCredentials(String username, String password, String url) {
+	public DbCredentials(String username, String password, String url, String dbName) {
 		this.username = username;
 		this.password = password;
 		this.url = url;
+		this.dbName = dbName;
 	}
 
 	public Long getId() {
@@ -78,6 +80,14 @@ public class DbCredentials implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
 	}
 
 	@Override
