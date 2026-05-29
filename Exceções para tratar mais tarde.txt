@@ -82,6 +82,7 @@ src/main/java/com_sql_engine/v_1_0/services/DbCredentialsService.java
 
 InvalidCredentialsException
 src/main/java/com_sql_engine/v_1_0/services/UserService.java
+
 Grupo 8, exceções:DataIntegrityViolationException / DatabaseException
 src/main/java/com_sql_engine/v_1_0/services/UserService.java
 src/main/java/com_sql_engine/v_1_0/source/exceptions/ResourceExeptionHandler.java
@@ -99,6 +100,7 @@ src/main/java/com_sql_engine/v_1_0/source/exceptions/ResourceExeptionHandler.jav
 
 EmptyResultDataAccessException
 src/main/java/com_sql_engine/v_1_0/services/UserService.java
+
 Grupo 10, exceções:EntityNotFoundException (origem em JPA getReferenceById — normalmente convertido)
 src/main/java/com_sql_engine/v_1_0/services/UserService.java
 

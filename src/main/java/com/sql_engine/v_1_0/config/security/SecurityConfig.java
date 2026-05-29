@@ -33,7 +33,7 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/", "/chat", "/settings", "/CSS/**", "/JS/**", "/imgs/**", "/users", "/users/sigin", "/users/login", "/auth", "/auth/**").permitAll()
+                    .requestMatchers("/", "/chat", "/settings", "/CSS/**", "/JS/**", "/imgs/**", "/users", "/users/sigin", "/users/login", "/auth", "/auth/**", "/favicon.ico").permitAll()
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
