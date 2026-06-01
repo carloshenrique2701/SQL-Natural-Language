@@ -152,7 +152,7 @@ public class UserService {
 		}
 	}
 
-	public User updateDbCredentials(Long id, DatabaseCredentials credentialsRequest) {
+	public String updateDbCredentials(Long id, DatabaseCredentials credentialsRequest) {
 		try {
 			// Normaliza a URL e extrai credenciais embutidas, se houver
 			DbConnectionValidator.NormalizedConnectionInfo normalized = dbConnectionValidator.normalizeJdbcConnectionInfo(credentialsRequest);
@@ -196,7 +196,10 @@ public class UserService {
 			credentials.setDbName(dbName);
 
 			entity.setDbCredentials(credentials);
-			return repository.save(entity);
+			repository.save(entity);
+			
+			return dbName;
+			
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		} catch (com.sql_engine.v_1_0.services.exceptions.ai.DatabaseSecurityException e) {

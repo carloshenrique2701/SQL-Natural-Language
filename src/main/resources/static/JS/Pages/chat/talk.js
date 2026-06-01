@@ -18,7 +18,7 @@ async function checkRequest() {
     }
 
     requestInput.value = "";
-
+    requestInput.disabled = true;
     let model = "gemini-2.5-flash";
     const genOptions = document.querySelectorAll(".gemini-option");
     genOptions.forEach((o) => {
@@ -82,5 +82,7 @@ async function checkRequest() {
         `;
 
         console.error("Erro ao enviar mensagem:", error);
+    } finally {
+        requestInput.disabled = false;
     }
 } 

@@ -2,6 +2,7 @@ package com.sql_engine.v_1_0.services;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import org.springframework.stereotype.Service;
 
@@ -49,8 +50,8 @@ public class DbConnectionValidator {
 			if (databaseName != null && !databaseName.isBlank()) {
 				return databaseName;
 			}
-		} catch (Exception e) {
-			// Ignora, tentaremos extrair da URL como fallback.
+		} catch (SQLException e) {
+			// Ignora, tentaremos extrair da URL como fallback. o objetivo é não deixar a falha de extração do nome do banco quebrar a validação inteira.
 		}
 
 		return extractDatabaseNameFromUrl(url);

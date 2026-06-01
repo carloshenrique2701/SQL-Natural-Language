@@ -91,10 +91,10 @@ public class UserSource {
 	}
 
 	@PutMapping(value = "/{id}/db-credentials")
-	public ResponseEntity<User> updateDbCredentials(@PathVariable Long id,
+	public ResponseEntity<String> updateDbCredentials(@PathVariable Long id,
 			@RequestBody DatabaseCredentials request) {
-		User obj = service.updateDbCredentials(id, request);
-		return ResponseEntity.ok().body(obj);
+		String dbName = service.updateDbCredentials(id, request);
+		return ResponseEntity.ok().body(dbName);
 	}
 
 	@PostMapping(value = "/{id}/verify-password")

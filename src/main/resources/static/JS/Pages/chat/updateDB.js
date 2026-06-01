@@ -1,14 +1,18 @@
 import { userUpdateDatabaseCredentials } from "../../API/users.js";
-import { closeAllModals } from "../../Components/utils/closeModals.js";
+import { createMessage } from "./utils/messageDbUpdated.js"
 
 const form = document.getElementById("formDbSettings");
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const url = document.getElementById("db-url").value;
-    const username = document.getElementById("db-user").value;
-    const password = document.getElementById("db-password").value;
+    const urlElement = document.getElementById("db-url");
+    const usernameElement = document.getElementById("db-user");
+    const passwordElement = document.getElementById("db-password");
+
+    const url = urlElement.value;
+    const username = usernameElement.value;
+    const password = passwordElement.value;
 
     const btnSubmit = form.querySelector('button[type="submit"]');
     btnSubmit.disabled = true;
@@ -18,22 +22,28 @@ form.addEventListener("submit", async (event) => {
         
         const user = JSON.parse(localStorage.getItem("User"));
 
-        await userUpdateDatabaseCredentials(user.id, {
+        const data = await userUpdateDatabaseCredentials(user.id, {
             url,
             username,
             password
         });
 
-        alert("Credenciais de banco de dados atualizadas com sucesso!");
+        console.log(data);
+        const dbNameElement = document.getElementById("db-name");
+        dbNameElement.textContent = data;
+
+        createMessage("Credenciais de banco de dados atualizadas com sucesso!", false);
 
     } catch (error) {
-        alert(error ?? "Ocorreu um erro ao atualizar as credenciais do banco de dados.");
+        createMessage(error ?? "Ocorreu um erro ao atualizar as credenciais do banco de dados.", true);
         console.error("Erro ao atualizar as credenciais do banco de dados:", error);
     } finally {
         btnSubmit.disabled = false;
         btnSubmit.textContent = "Update Credentials";
     }
 
-    closeAllModals();
+    urlElement.value = "";
+    usernameElement.value = "";
+    passwordElement.value = "";
 
 });

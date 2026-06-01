@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/CSS/Components/modal.css">
         <link rel="stylesheet" href="/CSS/Components/settings-modal.css">
         <link rel="stylesheet" href="/CSS/Components/input-group.css">
+        <link rel="stylesheet" href="/CSS/Components/message-box.css">
     </head>
     <body>
         <div class="app-container">
@@ -83,14 +84,59 @@
 
                 <h1>DB Settings</h1>
 
+                <div class="message-box" id="message"></div>
+
                 <span id="close-modal" class="close-modal">&times;</span>
+                <span id="info-tooltip" role="button" tabindex="0" aria-describedby="tooltip-info-modal" title="Passe o mouse para ver as instruções">ℹ️</span>
+
+                <div class="tooltip" id="tooltip-info-modal" aria-hidden="true">
+                    <h3>Configurações do Banco de Dados</h3>
+
+                    <section>
+                        <h4>Banco padrão após o cadastro</h4>
+                        <p>Ao criar sua conta, o sistema associa automaticamente um banco de demonstração MySQL local:</p>
+                        <ul>
+                            <li><strong>URL:</strong> <code>jdbc:mysql://localhost:3306/rede_lojas_roupas</code></li>
+                            <li><strong>Usuário:</strong> <code>root</code></li>
+                            <li><strong>Senha:</strong> em branco</li>
+                        </ul>
+                        <p>Isso exige MySQL acessível em <code>localhost:3306</code> com o schema <code>rede_lojas_roupas</code>. Para usar outro banco, preencha o formulário abaixo e clique em Salvar.</p>
+                    </section>
+
+                    <section>
+                        <h4>Campos do formulário</h4>
+                        <p>Use três campos independentes: <strong>URL</strong>, <strong>Usuário</strong> e <strong>Senha</strong>. Você pode informar usuário e senha nos campos ou embutir na URL — não é necessário fazer os dois ao mesmo tempo.</p>
+                    </section>
+
+                    <section>
+                        <h4>Formatos de URL aceitos</h4>
+                        <ul>
+                            <li><strong>URL JDBC completa:</strong> <code>jdbc:postgresql://host:porta/banco</code>, <code>jdbc:mysql://host:porta/banco</code>, etc.</li>
+                            <li><strong>Formato curto (sem <code>jdbc:</code>):</strong> <code>postgresql://</code>, <code>mysql://</code>, <code>mariadb://</code>, <code>sqlserver://</code> ou <code>oracle://</code> — o sistema adiciona <code>jdbc:</code> automaticamente.</li>
+                            <li><strong>Credenciais na URL:</strong> <code>postgresql://usuario:senha@host:porta/banco</code> — nesse caso, Usuário e Senha podem ficar vazios.</li>
+                            <li><strong>SQLite:</strong> apenas URL JDBC completa, ex.: <code>jdbc:sqlite:/caminho/para/arquivo.db</code> (em geral sem usuário nem senha).</li>
+                            <li><strong>Oracle:</strong> prefira o formato oficial, ex.: <code>jdbc:oracle:thin:@host:1521:SID</code> ou <code>jdbc:oracle:thin:@//host:1521/servico</code>.</li>
+                        </ul>
+                        <p class="tooltip-examples-title">Exemplos:</p>
+                        <ul class="tooltip-examples">
+                            <li><code>jdbc:postgresql://localhost:5432/meubanco</code></li>
+                            <li><code>mysql://localhost:3306/meubanco</code></li>
+                            <li><code>jdbc:sqlite:/var/dados/app.db</code></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Ao salvar</h4>
+                        <p>A aplicação testa a conexão antes de gravar. Se falhar, nada é salvo e uma mensagem de erro é exibida. A senha é armazenada criptografada; credenciais embutidas na URL são removidas da string salva.</p>
+                    </section>
+
+                    <section>
+                        <h4>Bancos suportados</h4>
+                        <p>PostgreSQL, MySQL, MariaDB, SQL Server, Oracle e SQLite.</p>
+                    </section>
+                </div>
 
                 <form id="formDbSettings">
-
-                    <div class="input-check">
-                        <input type="checkbox" name="standard-bank" id="standard-bank">
-                        <label for="standard-bank">Utilizar banco de dados de teste</label>
-                    </div>
 
                     <div class="input-group">
                         <input type="text" name="db-url" id="db-url" placeholder="">
@@ -124,6 +170,7 @@
         <script type="module" src="/JS/Pages/accessControl.js"></script>
         <script src="/JS/Pages/chat/chat.js"></script>
         <script type="module"  src="/JS/Components/modal-dbConfiguration.js"></script>
+        <script type="module" src="/JS/Pages/chat/tooltip.js"></script>
         <script type="module"  src="/JS/Components/modal-chat-settings.js"></script>
         <script type="module" src="/JS/Pages/chat/talk.js"></script>
         <script type="module" src="/JS/Pages/chat/updateDB.js"></script>

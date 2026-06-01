@@ -38,75 +38,114 @@
     margin-bottom: 20px;
 }
 
-.input-check {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: sans-serif;
-    cursor: pointer;
-    user-select: none;
-    margin-bottom: 20px;
-}
-
-/* Esconde o checkbox original mas mantém acessível */
-.input-check input[type="checkbox"] {
+#info-tooltip {
     position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+    left: 20px;
+    top: 20px;
+    font-size: 1.25rem;
+    cursor: help;
+    color: var(--primary-green);
+    line-height: 1;
+    z-index: 2;
 }
 
-/* Estiliza o label para parecer a caixa customizada antes do texto */
-.input-check label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    padding-left: 25px; /* Espaço para a nova caixa */
+#info-tooltip:hover,
+#info-tooltip:focus {
+    color: var(--secondary-green);
+    outline: none;
 }
 
-/* Cria a "caixa" do checkbox usando o ::before do label */
-.input-check label::before {
-    content: "";
+.tooltip {
+    display: none;
     position: absolute;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    background-color: #2f352f;
-    border: 2px solid var(--primary-green);
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    left: 20px;
+    right: 20px;
+    top: 52px;
+    z-index: 3;
+    max-height: min(70vh, 480px);
+    overflow-y: auto;
+    padding: 16px 18px;
+    text-align: left;
+    background-color: #1a1f1a;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    color: var(--text-main);
+    font-size: 0.875rem;
+    line-height: 1.5;
 }
 
-/* Estiliza o ícone de check (o "V") usando o ::after */
-.input-check label::after {
-    content: "";
-    position: absolute;
-    left: 7px;
-    top: 3px;
-    width: 6px;
-    height: 10px;
-    border: solid #000;
-    border-width: 0 2.5px 2.5px 0;
-    transform: rotate(45deg) scale(0); /* Começa invisível e pequeno */
-    transition: transform 0.2s ease;
+.tooltip.tooltip-visible {
+    display: block;
 }
 
-/* Quando o input estiver marcado (:checked) */
-.input-check input:checked + label::before {
-    background-color: var(--secondary-green); /* Cor de destaque */
-    border-color: var(--secondary-green);
+.tooltip h3 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    color: var(--primary-green);
 }
 
-/* Mostra o ícone de check quando marcado */
-.input-check input:checked + label::after {
-    transform: rotate(45deg) scale(1);
+.tooltip h4 {
+    margin: 14px 0 6px;
+    font-size: 0.9rem;
+    color: var(--secondary-green);
 }
 
-/* Feedback visual ao passar o mouse */
-.input-check:hover label::before {
-    border-color: var(--secondary-green);
+.tooltip h4:first-of-type {
+    margin-top: 0;
+}
+
+.tooltip p {
+    margin: 0 0 8px;
+}
+
+.tooltip ul {
+    margin: 0 0 8px;
+    padding-left: 1.25rem;
+}
+
+.tooltip li {
+    margin-bottom: 4px;
+}
+
+.tooltip code {
+    font-size: 0.8rem;
+    word-break: break-all;
+    color: var(--primary-green);
+}
+
+.tooltip-examples-title {
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.tooltip-examples {
+    list-style: none;
+    padding-left: 0;
+}
+
+.tooltip-examples li {
+    margin-bottom: 6px;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 92%;
+        padding: 20px 16px;
+    }
+
+    .tooltip {
+        left: 12px;
+        right: 12px;
+        top: 48px;
+        max-height: min(60vh, 400px);
+        font-size: 0.8125rem;
+    }
+
+    #info-tooltip {
+        left: 12px;
+        top: 16px;
+    }
 }
 
 .modal .modal-content button {
