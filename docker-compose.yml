@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.1
+    container_name: sql_natural_lang_db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=rede_lojas_roupas
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./test_db.sql:/docker-entrypoint-initdb.d/test_db.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sql_natural_lang_app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Injetando exatamente o que o seu application.properties espera
+      DB_URL: ${DB_URL:jdbc:mysql://localhost:3306/aiquery}
+      DB_USERNAME: ${DB_USERNAME:root}
+      DB_PASSWORD: ${DB_PASSWORD:}
+      GOOGLE_GEMINI_API_KEY: ${GOOGLE_GEMINI_API_KEY}
+      JWT_SECRET: ${JWT_SECRET:0123456789abcdef0123456789abcdef}
+      SECRET: ${SECRET:0123456789abcdef0123456789abcdef}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  db_data:
