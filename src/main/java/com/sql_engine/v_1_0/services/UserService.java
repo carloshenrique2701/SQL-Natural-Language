@@ -84,7 +84,7 @@ public class UserService {
 		obj.setPassword(encodedPassword);
 		
 		if (obj.getDbCredentials() == null) {
-			obj.setDbCredentials(new DbCredentials("root", "", "jdbc:mysql://localhost:3306/rede_lojas_roupas", "rede_lojas_roupas"));
+			obj.setDbCredentials(new DbCredentials("root", "true", "jdbc:mysql://db:3306/rede_lojas_roupas", "rede_lojas_roupas"));
 		}
 		
 		if (obj.getDbCredentials() != null && obj.getDbCredentials().getPassword() != null) {

@@ -29,12 +29,12 @@ services:
         condition: service_healthy
     environment:
       # Injetando exatamente o que o seu application.properties espera
-      DB_URL: ${DB_URL:jdbc:mysql://localhost:3306/aiquery}
-      DB_USERNAME: ${DB_USERNAME:root}
-      DB_PASSWORD: ${DB_PASSWORD:}
+      DB_URL: ${DB_URL:-jdbc:mysql://db:3306/rede_lojas_roupas}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-}
       GOOGLE_GEMINI_API_KEY: ${GOOGLE_GEMINI_API_KEY}
-      JWT_SECRET: ${JWT_SECRET:0123456789abcdef0123456789abcdef}
-      SECRET: ${SECRET:0123456789abcdef0123456789abcdef}
+      JWT_SECRET: ${JWT_SECRET:-0123456789abcdef0123456789abcdef}
+      SECRET: ${SECRET:-0123456789abcdef0123456789abcdef}
     ports:
       - "8080:8080"
     restart: unless-stopped
