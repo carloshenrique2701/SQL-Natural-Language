@@ -1,37 +1,65 @@
 version: "3.9"
 
 services:
-  db:
+  # Banco 1: Controle de Usuários e Gerenciamento
+  db_manager:
     image: mysql:8.1
-    container_name: sql_natural_lang_db
+    container_name: sql_manager_db
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=true
-      - MYSQL_DATABASE=rede_lojas_roupas
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=aiquery_manager
     volumes:
-      - db_data:/var/lib/mysql
-      - ./test_db.sql:/docker-entrypoint-initdb.d/test_db.sql:ro
+      - db_manager_data:/var/lib/mysql
     ports:
       - "3306:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
+
+
+  # Banco 2: Objeto de Análise (Rede de Lojas)
+  db_analise:
+    image: mysql:8.1
+    container_name: sql_analise_db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=rede_lojas_roupas
+    volumes:
+      - db_analise_data:/var/lib/mysql
+      - ./test_db.sql:/docker-entrypoint-initdb.d/test_db.sql:ro
+    ports:
+      - "3307:3306" # Porta 3307 no PC aponta para a 3306 interna do container
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+  # Aplicação Spring Boot
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: sql_natural_lang_app
     depends_on:
-      db:
+      db_manager:
+        condition: service_healthy
+      db_analise:
         condition: service_healthy
     environment:
-      # Injetando exatamente o que o seu application.properties espera
-      DB_URL: ${DB_URL:-jdbc:mysql://db:3306/rede_lojas_roupas}
-      DB_USERNAME: ${DB_USERNAME:-root}
-      DB_PASSWORD: ${DB_PASSWORD:-}
+      DB_URL: jdbc:mysql://db_manager:3306/aiquery_manager
+      DB_USERNAME: root
+      DB_PASSWORD:
+      
+      # URL adicional para conectar diretamente ao banco de análise via código
+      DB_ANALISE_URL: jdbc:mysql://db_analise:3306/rede_lojas_roupas
+      
       GOOGLE_GEMINI_API_KEY: ${GOOGLE_GEMINI_API_KEY}
       JWT_SECRET: ${JWT_SECRET:-0123456789abcdef0123456789abcdef}
       SECRET: ${SECRET:-0123456789abcdef0123456789abcdef}
@@ -40,4 +68,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  db_data:
+  db_manager_data:
+  db_analise_data:
