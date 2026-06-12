@@ -1,40 +1,36 @@
 package com.sql_engine.v_1_0.source.exceptions;
 
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 
-import java.sql.SQLException;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.validation.ConstraintViolationException;
-
 import com.sql_engine.v_1_0.services.exceptions.DatabaseException;
 import com.sql_engine.v_1_0.services.exceptions.ai.AiConsultationException;
 import com.sql_engine.v_1_0.services.exceptions.ai.DatabaseSecurityException;
 import com.sql_engine.v_1_0.services.exceptions.users.InvalidCredentialsException;
 import com.sql_engine.v_1_0.services.exceptions.users.ResourceNotFoundException;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ResourceExeptionHandler {
@@ -50,7 +46,7 @@ public class ResourceExeptionHandler {
 	public ResponseEntity<StandardError> handleHttpMessageNotReadable(HttpMessageNotReadableException e, HttpServletRequest request) {
 		String error = "Malformed request.";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		String message = "The request body is invalid or malformed. Check the JSON syntax and field names.";
+		String message = "O corpo da requisição está inválido ou mal formatado.";
 		return buildErrorResponse(status, error, message, request);
 	}
 
@@ -93,14 +89,6 @@ public class ResourceExeptionHandler {
 		return buildErrorResponse(status, error, message, request);
 	}
 
-	@ExceptionHandler(MaxUploadSizeExceededException.class)
-	public ResponseEntity<StandardError> handleMaxUploadSizeExceeded(MaxUploadSizeExceededException e, HttpServletRequest request) {
-		String error = "Payload too large.";
-		HttpStatus status = HttpStatus.PAYLOAD_TOO_LARGE;
-		String message = "Uploaded file size exceeds the maximum allowed limit.";
-		return buildErrorResponse(status, error, message, request);
-	}
-
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<StandardError> handleConstraintViolation(ConstraintViolationException e, HttpServletRequest request) {
 		String error = "Validation failed.";
@@ -131,7 +119,7 @@ public class ResourceExeptionHandler {
 	public ResponseEntity<StandardError> handleAccessDenied(AccessDeniedException e, HttpServletRequest request) {
 		String error = "Access denied.";
 		HttpStatus status = HttpStatus.FORBIDDEN;
-		String message = e.getMessage() != null ? e.getMessage() : "You do not have permission to access this resource.";
+		String message = e.getMessage() != null ? e.getMessage() : "Você não tem permissão para essa funcionalidade.";
 		return buildErrorResponse(status, error, message, request);
 	}
 
@@ -171,7 +159,7 @@ public class ResourceExeptionHandler {
 	public ResponseEntity<StandardError> handleExpiredJwt(ExpiredJwtException e, HttpServletRequest request) {
 		String error = "Token expired.";
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
-		String message = e.getMessage() != null ? e.getMessage() : "The authentication token has expired.";
+		String message = e.getMessage() != null ? e.getMessage() : "Seção expirada.";
 		return buildErrorResponse(status, error, message, request);
 	}
 

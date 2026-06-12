@@ -52,7 +52,7 @@ public class SchemaExtractorService {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error extracting schema. " + e.getMessage());
+			throw new DatabaseException("Erro na extração do esquema do banco de dados.");
 		}
 
 		return schemaInfo.toString();

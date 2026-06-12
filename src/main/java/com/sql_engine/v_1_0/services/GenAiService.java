@@ -26,9 +26,9 @@ public class GenAiService {
 			return res.text();
 			
 		} catch (IllegalArgumentException e) {
-			throw new AiConsultationException("Invalid AI credentials, please check your configuration.");
+			throw new AiConsultationException("Credenciais de conexão com o serviço de IA inválidas.");
 		} catch (ClientException e) {
-			throw new AiConsultationException("An error occurred while consulting the AI: " + e.getMessage());
+			throw new AiConsultationException("Ocorreu um erro ao consultar o serviço de IA: " + e.getMessage());
 		}
 		
 	}

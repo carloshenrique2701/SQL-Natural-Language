@@ -47,7 +47,7 @@ public class NaturalLanguageQueryService {
 		List<Map<String, Object>> data = processQuery(userReq, model, user);
 		
 		if (data.isEmpty()) {
-			return "<p>No results found.</p>";
+			return "<p>Sem resultados encontrados.</p>";
 		}
 		
 		return generator.generateHtml(data, userReq, model);
@@ -55,7 +55,7 @@ public class NaturalLanguageQueryService {
 	
 	private DatabaseCredentials buildDatabaseCredentials(User user) {
 		if (user == null || user.getDbCredentials() == null) {
-			throw new DatabaseException("Authenticated user has no database credentials.");
+			throw new DatabaseException("Usuário não tem credenciais de conexão com um banco de dados para buscar os dados.");
 		}
 	
 		DbCredentials dbCredentials = user.getDbCredentials();

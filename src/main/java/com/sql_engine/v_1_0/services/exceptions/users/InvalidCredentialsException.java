@@ -4,7 +4,7 @@ public class InvalidCredentialsException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public InvalidCredentialsException(String msg) {
-		super(msg != null ? msg : "Invalid credentials.");
+		super(msg != null ? msg : "Credenciais inválidas.");
 	}
 
 }

@@ -31,7 +31,7 @@ public class SecurityDataBaseConfig {
 			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes()));
 		} catch (RuntimeException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException 
 				|IllegalBlockSizeException | BadPaddingException e) {
-			throw new DatabaseSecurityException("Error while encrypting: " + e.getMessage());
+			throw new DatabaseSecurityException("Erro ao aplicar a criptografia: " + e.getMessage());
 		} 
 		
 	}
@@ -47,7 +47,7 @@ public class SecurityDataBaseConfig {
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} catch (RuntimeException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException 
 				|IllegalBlockSizeException | BadPaddingException e) {
-			throw new DatabaseSecurityException("Error while encrypting: " + e.getMessage());
+			throw new DatabaseSecurityException("Erro ao aplicar descriptografia: " + e.getMessage());
 		} 
 		
 	}

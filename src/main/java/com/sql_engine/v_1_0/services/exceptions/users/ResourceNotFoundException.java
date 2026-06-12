@@ -3,8 +3,8 @@ package com.sql_engine.v_1_0.services.exceptions.users;
 public class ResourceNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public ResourceNotFoundException(Long id) {
-		super("Id not found: " + id);
+	public ResourceNotFoundException() {
+		super("Id não encontrado.");
 	}
 
 }

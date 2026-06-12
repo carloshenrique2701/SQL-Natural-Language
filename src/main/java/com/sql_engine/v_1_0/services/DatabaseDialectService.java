@@ -23,7 +23,7 @@ public class DatabaseDialectService {
 			return dialect;
 
 		} catch (SQLException e) {
-			throw new DatabaseException("Failed to connect to the database to detect its dialect.");
+			throw new DatabaseException("Falha ao conectar o banco de dados para extrair o nome do banco de dados.");
 		}
 
 	}

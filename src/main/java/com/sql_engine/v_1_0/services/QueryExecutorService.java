@@ -33,11 +33,11 @@ public class QueryExecutorService {
 		try {
 			st = CCJSqlParserUtil.parse(sql);			
 		} catch (JSQLParserException e) {
-			throw new DatabaseSecurityException("Waning operation detected. It's not allowed to execute operations that can alter our database.");
+			throw new DatabaseSecurityException("Operação perigosa detectada. Não temos permissão para realizar operações que alterem a base de dados.");
 		} 
 		
 		if (!(st instanceof Select)) {
-			throw new DatabaseSecurityException("I'm sorry, but I can only execute consults that retrieve data. Operations that can alter the database are not allowed for security reasons.");
+			throw new DatabaseSecurityException("Me desculpe, tenho permissão somente para consultar os dados no banco de dados. Operações que alterem a base de dados não podem ser executadas.");
 		}
 		
 		List<Map<String,Object>> rows = new ArrayList<>();
@@ -62,9 +62,9 @@ public class QueryExecutorService {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error executing a connection to the database.");
+			throw new DatabaseException("Erro ao conectar com o banco de dados.");
 		} catch (NoClassDefFoundError e) {
-			throw new DatabaseException("We don't have the necessary driver to connect to this database. I'm sorry for the inconvenience.");
+			throw new DatabaseException("Nós não temos o driver necessário para conectar com esse banco de dados.");
 		} 
 		
 		return rows;

@@ -56,7 +56,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.orElseThrow( () -> new ResourceNotFoundException(id) ); 
+		return obj.orElseThrow( () -> new ResourceNotFoundException() ); 
 	}
 	
 	public void delete(Long id) {
@@ -65,11 +65,11 @@ public class UserService {
 			if (repository.existsById(id)) {
 				repository.deleteById(id);
 			} else {
-				throw new ResourceNotFoundException(id);
+				throw new ResourceNotFoundException();
 			}
 			
 		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
@@ -77,7 +77,7 @@ public class UserService {
 	
 	public User insert(User obj) {
 		if (repository.findByEmail(obj.getEmail()).isPresent()) {
-			throw new DatabaseException("Email already registered: " + obj.getEmail());
+			throw new DatabaseException("Esse email já há um usuário vindulado.");
 		}
 		
 		String encodedPassword = encoder.encode(obj.getPassword());
@@ -101,7 +101,7 @@ public class UserService {
 			insertUpdatedValues(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		}
 	}
 	
@@ -135,20 +135,20 @@ public class UserService {
 			}
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		}
 	}
 
 	public User updatePassword(Long id, UserPasswordUpdate passwordRequest) {
 		if (passwordRequest.password() == null || passwordRequest.password().isBlank()) {
-			throw new InvalidCredentialsException("Password cannot be null or empty.");
+			throw new InvalidCredentialsException("A senha não pode estar vazia.");
 		}
 		try {
 			User entity = repository.getReferenceById(id);
 			entity.setPassword(encoder.encode(passwordRequest.password()));
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		}
 	}
 
@@ -201,12 +201,12 @@ public class UserService {
 			return dbName;
 			
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		} catch (com.sql_engine.v_1_0.services.exceptions.ai.DatabaseSecurityException e) {
 			// Propaga para o handler específico manter a mensagem de validação
 			throw e;
 		} catch (Exception e) {
-			throw new DatabaseException("Erro ao atualizar credenciais do DB: " + e.getMessage());
+			throw new DatabaseException("Erro ao atualizar credenciais do DB.");
 		}
 	}
 
@@ -220,7 +220,7 @@ public class UserService {
 			User user = repository.getReferenceById(id);
 			return encoder.matches(password, user.getPassword());
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		}
 	}
 

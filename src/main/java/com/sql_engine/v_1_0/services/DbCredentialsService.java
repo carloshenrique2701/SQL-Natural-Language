@@ -27,11 +27,11 @@ public class DbCredentialsService {
 			if (repository.existsById(id)) {
 				repository.deleteById(id);
 			} else {
-				throw new ResourceNotFoundException(id);
+				throw new ResourceNotFoundException();
 			}
 			
 		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class DbCredentialsService {
 			insertUpdatedValues(entity, obj);
 			repository.save(entity);
 		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException();
 		}
 	}
 	
@@ -57,21 +57,19 @@ public class DbCredentialsService {
 	}
 	
 	public DbCredentials findById(Long id) {
-		return repository.findById(id).orElseThrow( () -> new ResourceNotFoundException(id) );
+		return repository.findById(id).orElseThrow( () -> new ResourceNotFoundException() );
 	}
 	
 
 	public DbCredentials findByIdAndUser(Long credentialsId, Long userId) {
 		DbCredentials credentials = repository.findById(credentialsId)
-			.orElseThrow(() -> new ResourceNotFoundException(credentialsId));
+			.orElseThrow(() -> new ResourceNotFoundException());
 		
 		User user = userRepository.findById(userId)
-			.orElseThrow(() -> new ResourceNotFoundException(userId));
+			.orElseThrow(() -> new ResourceNotFoundException());
 		
 		if (!credentials.getId().equals(user.getDbCredentials().getId())) {
-			throw new DatabaseSecurityException(
-				"User " + userId + " is not authorized to access credentials " + credentialsId
-			);
+			throw new DatabaseSecurityException("Usuário " + userId + " não está autorizado para acessar as credenciais do banco de dados.");
 		}
 		
 		return credentials;
