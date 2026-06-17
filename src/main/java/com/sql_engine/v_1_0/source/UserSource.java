@@ -85,9 +85,9 @@ public class UserSource {
 	}
 
 	@PutMapping(value = "/{id}/password")
-	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordUpdate request) {
-		service.updatePassword(id, request);
-		return ResponseEntity.ok().build();
+	public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody UserPasswordUpdate request) {
+		User obj = service.updatePassword(id, request);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@PutMapping(value = "/{id}/db-credentials")

@@ -21,7 +21,7 @@ btnNewPassword.addEventListener("click", async function(event) {
         const user = JSON.parse(localStorage.getItem("User"));
         const response = await userUpdatePassword(user.id, newPassword);
 
-        if (response.status === 200) {
+        if (response) {
             alert("Senha atualizada com sucesso.");
             closeAllModals();
         } else {
